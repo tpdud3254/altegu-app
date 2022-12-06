@@ -1,10 +1,13 @@
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import Intro from "./screens/Intro";
+import { Asset } from "expo-asset";
+import { ThemeProvider } from "styled-components/native";
+import { theme } from "./styles";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,9 +20,8 @@ export default function App() {
                 //TODO: token preload
                 //TODO: font preload
                 //TODO: image preload
-
-                await Font.loadAsync(Entypo.font);
-                await new Promise((resolve) => setTimeout(resolve, 2000));
+                // await Font.loadAsync(Entypo.font);
+                // await new Promise.all([...imagePromises]);
             } catch (e) {
                 console.warn(e);
             } finally {
@@ -41,13 +43,12 @@ export default function App() {
     }
 
     return (
-        <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-            onLayout={onLayoutRootView}
-        >
-            <NavigationContainer>
-                {isLoggedIn ? <Text>logged in</Text> : <Intro />}
-            </NavigationContainer>
+        <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+            <ThemeProvider theme={theme}>
+                <NavigationContainer>
+                    {isLoggedIn ? <Text>logged in</Text> : <Intro />}
+                </NavigationContainer>
+            </ThemeProvider>
         </View>
     );
 }
