@@ -1,20 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import Entypo from "@expo/vector-icons/Entypo";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from "expo-font";
+import { NavigationContainer } from "@react-navigation/native";
+import Intro from "./screens/Intro";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    const [appIsReady, setAppIsReady] = useState(false);
+    const isLoggedIn = false; //TODO: 전역 변수로 바꾸기
+    useEffect(() => {
+        async function prepare() {
+            try {
+                //TODO: token preload
+                //TODO: font preload
+                //TODO: image preload
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+                await Font.loadAsync(Entypo.font);
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+            } catch (e) {
+                console.warn(e);
+            } finally {
+                setAppIsReady(true);
+            }
+        }
+
+        prepare();
+    }, []);
+
+    const onLayoutRootView = useCallback(async () => {
+        if (appIsReady) {
+            await SplashScreen.hideAsync();
+        }
+    }, [appIsReady]);
+
+    if (!appIsReady) {
+        return null;
+    }
+
+    return (
+        <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            onLayout={onLayoutRootView}
+        >
+            <NavigationContainer>
+                {isLoggedIn ? <Text>logged in</Text> : <Intro />}
+            </NavigationContainer>
+        </View>
+    );
+}
