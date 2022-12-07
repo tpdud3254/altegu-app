@@ -3,13 +3,13 @@ import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { Text, View } from "react-native";
 
-function Intro() {
+function SignIn() {
     return (
         <View>
-            <Text>Intro</Text>
+            <Text>signin</Text>
         </View>
     );
 }
 
-Intro.propTypes = {};
-export default Intro;
+SignIn.propTypes = {};
+export default SignIn;

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useRef, useState } from "react";
 import {
     Button,
@@ -64,6 +65,7 @@ const bottomButtonProps = {
 
 export default function Intro() {
     const { width: imageSize } = useWindowDimensions();
+    const navigation = useNavigation();
     const flatListRef = useRef();
 
     const renderIntro = ({ item: path }) => (
@@ -74,8 +76,12 @@ export default function Intro() {
         flatListRef.current.scrollToIndex({ index });
     };
 
-    const goToSignIn = () => {};
-    const goToSignUp = () => {};
+    const goToSignIn = () => {
+        navigation.navigate("SignIn");
+    };
+    const goToSignUp = () => {
+        navigation.navigate("SignUpNavigator");
+    };
 
     return (
         <Container>

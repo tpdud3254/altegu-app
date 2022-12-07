@@ -8,6 +8,8 @@ import Intro from "./screens/Intro";
 import { Asset } from "expo-asset";
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "./styles";
+import IntroNavigator from "./navigation/IntroNavigator";
+import "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -46,7 +48,7 @@ export default function App() {
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
             <ThemeProvider theme={theme}>
                 <NavigationContainer>
-                    {isLoggedIn ? <Text>logged in</Text> : <Intro />}
+                    {isLoggedIn ? <Text>logged in</Text> : <IntroNavigator />}
                 </NavigationContainer>
             </ThemeProvider>
         </View>
