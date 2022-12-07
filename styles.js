@@ -6,5 +6,7 @@ export const theme = {
         blue: "#CBDCF6",
     },
     fontColor: "black",
+    darkFontColor: "#555555",
     lightFontColor: "white",
+    backgroundColor: "white",
 };

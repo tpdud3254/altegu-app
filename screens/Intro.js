@@ -1,15 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useRef, useState } from "react";
-import {
-    Button,
-    Image,
-    ScrollView,
-    FlatList,
-    Text,
-    TouchableOpacity,
-    useWindowDimensions,
-    View,
-} from "react-native";
+import React, { useRef } from "react";
+import { FlatList, useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import CircleButton from "../component/presenter/button/CircleButton";
 import { theme } from "../styles";
@@ -23,6 +14,7 @@ const imagePath = [
 const Container = styled.View`
     flex: 1;
     width: 100%;
+    background-color: ${(props) => props.theme.backgroundColor};
 `;
 
 const Top = styled.View`
