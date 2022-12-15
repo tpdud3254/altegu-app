@@ -44,7 +44,7 @@ const BottomButtonWrapper = styled.View`
 `;
 
 const topButtonProps = {
-    size: 60,
+    size: 30,
     textSize: 20,
 };
 
@@ -91,7 +91,7 @@ export default function Intro() {
                         <CircleButton
                             key={index}
                             onPress={() => scrollToIntroImage(index)}
-                            title={index + 1 + ""}
+                            value={index + 1 + ""}
                             {...topButtonProps}
                         />
                     ))}
@@ -101,12 +101,12 @@ export default function Intro() {
                 <BottomButtonWrapper>
                     <CircleButton
                         onPress={goToSignIn}
-                        title="로그인"
+                        value="로그인"
                         {...bottomButtonProps}
                     />
                     <CircleButton
                         onPress={goToSignUp}
-                        title="회원가입"
+                        value="회원가입"
                         {...bottomButtonProps}
                     />
                 </BottomButtonWrapper>

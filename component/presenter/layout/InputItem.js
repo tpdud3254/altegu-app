@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
+import ItemTitle from "../text/ItemTitle";
 
 const InputContainer = styled.View`
     width: 100%;
@@ -8,26 +9,17 @@ const InputContainer = styled.View`
     padding: 0px 5px;
 `;
 
-const InputText = styled.Text`
-    width: 100%;
-    padding-left: 5px;
-    padding-bottom: 5px;
-    font-size: 18px;
-    color: ${(props) => props.theme.darkFontColor};
-    font-weight: 500;
-`;
-
-function InputLayout({ title, children }) {
+function InputItem({ title, children }) {
     return (
         <InputContainer>
-            <InputText>{title}</InputText>
+            <ItemTitle title={title} />
             {children}
         </InputContainer>
     );
 }
 
-InputLayout.propTypes = {
+InputItem.propTypes = {
     title: PropTypes.string,
 };
 
-export default InputLayout;
+export default InputItem;

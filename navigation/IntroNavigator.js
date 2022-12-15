@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import Intro from "../screens/Intro";
 import SignIn from "../screens/SignIn";
+import { theme } from "../styles";
 import SignUpNavigator from "./SignUpNavigator";
 
 const Stack = createStackNavigator();
@@ -17,7 +18,12 @@ export default function IntroNavigator() {
             <Stack.Screen
                 name="SignIn"
                 component={SignIn}
-                options={{ title: "로그인", headerBackTitle: "처음으로 가기" }}
+                options={{
+                    title: "",
+                    headerBackTitleVisible: false,
+                    headerShadowVisible: false,
+                    headerTintColor: "black",
+                }}
             />
             <Stack.Screen
                 name="SignUpNavigator"

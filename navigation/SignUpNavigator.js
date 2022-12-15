@@ -12,16 +12,14 @@ const Stack = createStackNavigator();
 export default function SignUpNavigator() {
     return (
         <Stack.Navigator
-            screenOptions={{ title: "회원가입", headerBackTitleVisible: false }}
+            screenOptions={{
+                title: "",
+                headerBackTitleVisible: false,
+                headerShadowVisible: false,
+                headerTintColor: "black",
+            }}
         >
-            <Stack.Screen
-                name="SignUp"
-                component={SignUp}
-                options={{
-                    headerBackTitle: "처음으로 가기",
-                    headerBackTitleVisible: true,
-                }}
-            />
+            <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="SignUpStep1" component={SignUpStep1} />
             <Stack.Screen name="SignUpStep2" component={SignUpStep2} />
             <Stack.Screen name="SignUpStep3" component={SignUpStep3} />

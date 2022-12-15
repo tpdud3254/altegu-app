@@ -1,7 +1,7 @@
 import React from "react";
 import { Platform, KeyboardAvoidingView } from "react-native";
 import styled from "styled-components/native";
-import Button from "../button/Button";
+import SubmitButton from "../button/SubmitButton";
 import DismissKeyboard from "../DismissKeyboard";
 
 const Container = styled.View`
@@ -23,7 +23,7 @@ export default function FormLayout({ children, submitBtnProps }) {
                 >
                     {children}
                 </KeyboardAvoidingView>
-                <Button {...submitBtnProps} />
+                <SubmitButton {...submitBtnProps} />
             </Container>
         </DismissKeyboard>
     );

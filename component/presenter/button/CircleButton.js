@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 
 const Button = styled.TouchableOpacity`
     background-color: ${(props) => props.color || props.theme.main};
-    width: ${(props) => props.size || 20}px;
-    height: ${(props) => props.size || 20}px;
+    width: ${(props) => props.size || 10}px;
+    height: ${(props) => props.size || 10}px;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
@@ -19,7 +19,7 @@ const ButtonText = styled.Text`
 
 function CircleButton({
     onPress,
-    title,
+    value,
     size,
     textSize,
     textWeight,
@@ -33,7 +33,7 @@ function CircleButton({
                 textWeight={textWeight}
                 textColor={textColor}
             >
-                {title}
+                {value}
             </ButtonText>
         </Button>
     );
@@ -41,7 +41,7 @@ function CircleButton({
 
 CircleButton.propTypes = {
     onPress: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
     size: PropTypes.number,
     textSize: PropTypes.number,
     textWeight: PropTypes.number,

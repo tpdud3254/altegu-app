@@ -12,7 +12,7 @@ const InputText = styled.Text`
     width: 100%;
     padding-left: 5px;
     padding-bottom: 7px;
-    font-size: 18px;
+    font-size: 30px;
     color: ${(props) => props.theme.darkFontColor};
     font-weight: 500;
 `;
@@ -33,7 +33,7 @@ const ButtonText = styled.Text`
     color: ${(props) => props.theme.darkFontColor};
 `;
 
-function InputBtnLayout({ title, btnTitle, fn, children }) {
+function InputBtnItem({ title, btnTitle, fn, children }) {
     return (
         <InputContainer>
             <InputText>{title}</InputText>
@@ -47,10 +47,10 @@ function InputBtnLayout({ title, btnTitle, fn, children }) {
     );
 }
 
-InputBtnLayout.propTypes = {
+InputBtnItem.propTypes = {
     title: PropTypes.string,
     btnTitle: PropTypes.string,
     fn: PropTypes.func,
 };
 
-export default InputBtnLayout;
+export default InputBtnItem;
