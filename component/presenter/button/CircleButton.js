@@ -9,6 +9,7 @@ const Button = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     border-radius: 50%;
+    margin: ${(props) => props.margin || 0};
 `;
 
 const ButtonText = styled.Text`
@@ -25,9 +26,10 @@ function CircleButton({
     textWeight,
     color,
     textColor,
+    margin,
 }) {
     return (
-        <Button onPress={onPress} size={size} color={color}>
+        <Button onPress={onPress} size={size} color={color} margin={margin}>
             <ButtonText
                 textSize={textSize}
                 textWeight={textWeight}
@@ -41,12 +43,13 @@ function CircleButton({
 
 CircleButton.propTypes = {
     onPress: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.string,
     size: PropTypes.number,
     textSize: PropTypes.number,
     textWeight: PropTypes.number,
     color: PropTypes.string,
     textColor: PropTypes.string,
+    margin: PropTypes.string,
 };
 
 export default CircleButton;

@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { FlatList, useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import CircleButton from "../component/presenter/button/CircleButton";
+import VerticalDivider from "../component/presenter/divider/VerticalDivider";
 import { theme } from "../styles";
 
 const imagePath = [
@@ -18,7 +19,7 @@ const Container = styled.View`
 `;
 
 const Top = styled.View`
-    flex: 2;
+    flex: 2.5;
     padding-top: 50px;
 `;
 
@@ -33,32 +34,36 @@ const IntroImage = styled.Image`
 
 const TopButtonWrapper = styled.View`
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
     padding-bottom: 40px;
 `;
 
 const BottomButtonWrapper = styled.View`
     flex-direction: row;
     justify-content: space-evenly;
+    align-items: center;
     margin-top: 40px;
+    height: 60%;
 `;
 
 const topButtonProps = {
-    size: 30,
-    textSize: 20,
+    size: 35,
+    margin: "0px 10px 0px 10px",
 };
 
 const bottomButtonProps = {
     size: 100,
     textSize: 25,
     textWeight: 600,
-    color: theme.sub.green,
+    textColor: "black",
+    color: "white",
 };
 
 export default function Intro() {
     const { width: imageSize } = useWindowDimensions();
     const navigation = useNavigation();
     const flatListRef = useRef();
+    const [imageIndex, setImageIndex] = useState(0);
 
     const renderIntro = ({ item: path }) => (
         <IntroImage size={imageSize} source={path} />
@@ -85,13 +90,24 @@ export default function Intro() {
                     data={imagePath}
                     renderItem={renderIntro}
                     ref={flatListRef}
+                    onMomentumScrollEnd={(event) => {
+                        const index = Math.floor(
+                            Math.floor(event.nativeEvent.contentOffset.x) /
+                                Math.floor(
+                                    event.nativeEvent.layoutMeasurement.width
+                                )
+                        );
+                        setImageIndex(index);
+                    }}
                 />
                 <TopButtonWrapper>
                     {imagePath.map((__, index) => (
                         <CircleButton
                             key={index}
                             onPress={() => scrollToIntroImage(index)}
-                            value={index + 1 + ""}
+                            color={
+                                imageIndex === index ? theme.main : "#bcbcbc"
+                            }
                             {...topButtonProps}
                         />
                     ))}
@@ -104,6 +120,7 @@ export default function Intro() {
                         value="로그인"
                         {...bottomButtonProps}
                     />
+                    <VerticalDivider color="#bcbcbc" />
                     <CircleButton
                         onPress={goToSignUp}
                         value="회원가입"
