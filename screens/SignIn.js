@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import FormLayout from "../component/presenter/layout/FormLayout";
 import { TextInput } from "../component/presenter/input/TextInput";
-import InputItem from "../component/presenter/layout/InputItem";
-import InputBtnItem from "../component/presenter/layout/InputBtnItem";
+import InputItem from "../component/presenter/item/InputItem";
+import InputBtnItem from "../component/presenter/item/InputBtnItem";
 import { Input } from "../component/presenter/input/Input";
 import Title from "../component/presenter/text/Title";
 

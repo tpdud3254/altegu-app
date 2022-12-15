@@ -33,6 +33,7 @@ const ButtonText = styled.Text`
     color: ${(props) => props.theme.darkFontColor};
 `;
 
+//inputbox내에 button (ex. password)
 function InputBtnItem({ title, btnTitle, fn, children }) {
     return (
         <InputContainer>

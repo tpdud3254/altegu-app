@@ -3,17 +3,20 @@ import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import SubmitLayout from "../../component/presenter/layout/SubmitLayout";
 
-function SignUpStep3() {
+function SignUpStep3({ route }) {
     const navigation = useNavigation();
 
-    const onPress = () => {
-        navigation.navigate("SignUpStep4");
+    const onNextStep = () => {
+        navigation.navigate("SignUpStep4", {
+            memberType: route?.params?.memberType,
+        });
     };
     return (
-        <View>
-            <Text onPress={onPress}>SignUpStep3</Text>
-        </View>
+        <SubmitLayout submitBtnProps={{ value: "다음으로", fn: onNextStep }}>
+            <Text>작업지역 선택</Text>
+        </SubmitLayout>
     );
 }
 

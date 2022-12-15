@@ -8,8 +8,9 @@ const SButton = styled.TouchableOpacity`
     border-radius: 5px;
     align-items: center;
     margin: 5px 0px;
-    width: ${(props) => (props.width ? props.width + "px" : "100%")};
-    height: ${(props) => (props.height ? props.height + "px" : "50px")};
+    width: ${(props) => (props.width ? props.width : "100%")};
+    height: ${(props) => (props.height ? props.height : "50px")};
+    justify-content: center;
 `;
 
 const ButtonText = styled.Text`
@@ -20,15 +21,10 @@ const ButtonText = styled.Text`
 
 function Button({ value, color, textSize, textColor, fn, width, height }) {
     return (
-        <SButton
-            color={color}
-            textSize={textSize}
-            textColor={textColor}
-            width={width}
-            height={height}
-            onPress={fn}
-        >
-            <ButtonText>{value}</ButtonText>
+        <SButton color={color} width={width} height={height} onPress={fn}>
+            <ButtonText textSize={textSize} textColor={textColor}>
+                {value}
+            </ButtonText>
         </SButton>
     );
 }
