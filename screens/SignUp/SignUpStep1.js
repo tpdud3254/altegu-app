@@ -13,6 +13,8 @@ import { ORDINARY } from "../../constant";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import AutoHeightImage from "react-native-auto-height-image";
+import { Ionicons } from "@expo/vector-icons";
+import { theme } from "../../styles";
 
 const ImageContainer = styled.View`
     min-height: 200px;
@@ -25,10 +27,22 @@ const NoImageText = styled.Text`
     font-size: 20px;
 `;
 
-const Image = styled.Image`
-    /* width: 200px; */
-    /* height: 100%; */
+const RowContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
 `;
+
+const TextContainer = styled.View`
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
+`;
+
+const RecommenderText = styled.Text`
+    font-size: 20px;
+`;
+
 function SignUpStep1({ route }) {
     const navigation = useNavigation();
     const [textSecure, setTextSecure] = useState(true);
@@ -53,9 +67,9 @@ function SignUpStep1({ route }) {
     };
 
     return (
-        <ScrollView>
-            <FormLayout submitBtnProps={{ value: "다음으로", fn: onNextStep }}>
-                <Title value="회원가입" color="#555555" />
+        <FormLayout submitBtnProps={{ value: "다음으로", fn: onNextStep }}>
+            <Title value="회원가입" color="#555555" />
+            <ScrollView style={{ marginBottom: 55 }}>
                 <InputItem
                     title={
                         route?.params?.memberType === ORDINARY
@@ -90,7 +104,7 @@ function SignUpStep1({ route }) {
                                 <ImageContainer>
                                     {route?.params?.file ? (
                                         <AutoHeightImage
-                                            width={200}
+                                            width={150}
                                             source={{
                                                 uri: route?.params?.file,
                                             }}
@@ -112,10 +126,47 @@ function SignUpStep1({ route }) {
                                 returnKeyType="next"
                             />
                         </InputItem>
+                        <Item title="추천 기사님 정보">
+                            <RowContainer>
+                                <TextInput
+                                    placeholder="성함 / 상호명"
+                                    returnKeyType="next"
+                                    width="39%"
+                                />
+                                <TextInput
+                                    placeholder="휴대폰 번호"
+                                    returnKeyType="next"
+                                    width="59%"
+                                />
+                            </RowContainer>
+
+                            {true ? null : (
+                                <TextContainer>
+                                    <RecommenderText>홍길동</RecommenderText>
+                                    <RecommenderText>
+                                        010-1234-5678
+                                    </RecommenderText>
+                                    <Ionicons
+                                        name="checkmark"
+                                        color={theme.sub.green}
+                                        size={30}
+                                    />
+                                </TextContainer>
+                            )}
+
+                            {true ? null : (
+                                <TextContainer>
+                                    <RecommenderText style={{ color: "red" }}>
+                                        올바른 번호 혹은 성함을 입력해 주세요.
+                                    </RecommenderText>
+                                </TextContainer>
+                            )}
+                            {/* TODO:기능추가 */}
+                        </Item>
                     </>
                 ) : null}
-            </FormLayout>
-        </ScrollView>
+            </ScrollView>
+        </FormLayout>
     );
 }
 

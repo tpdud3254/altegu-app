@@ -5,12 +5,14 @@ import { Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FormLayout from "../../component/presenter/layout/FormLayout";
 import { ORDINARY } from "../../constant";
+import Button from "../../component/presenter/button/Button";
 
 function SignUpStep2({ route }) {
     const navigation = useNavigation();
 
     console.log("member type : ", route?.params?.memberType);
 
+    //TODO:기능 추가 및 UI 구현
     const onNextStep = () => {
         if (route?.params?.memberType === ORDINARY) {
             navigation.navigate("SignUpStep4", {
@@ -25,7 +27,7 @@ function SignUpStep2({ route }) {
 
     return (
         <FormLayout submitBtnProps={{ value: "다음으로", fn: onNextStep }}>
-            <Text>휴대폰 인증</Text>
+            <Button value="휴대폰 인증" fn={onNextStep} />
         </FormLayout>
     );
 }

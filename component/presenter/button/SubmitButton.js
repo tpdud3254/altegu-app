@@ -7,7 +7,7 @@ const SButton = styled.TouchableOpacity`
     padding: 18px 10px;
     border-radius: 5px;
     align-items: center;
-    margin: 10px 0px;
+    margin: 10px 0px 10px 0px;
     width: 100%;
 `;
 

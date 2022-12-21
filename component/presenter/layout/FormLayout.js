@@ -17,13 +17,13 @@ export default function FormLayout({ children, submitBtnProps }) {
         <DismissKeyboard>
             <Container>
                 <KeyboardAvoidingView
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", flex: 5 }}
                     behavior="position"
                     keyboardVerticalOffset={Platform.OS === "ios" ? 50 : 0}
                 >
                     {children}
                 </KeyboardAvoidingView>
-                <SubmitButton {...submitBtnProps} />
+                <SubmitButton style={{ flex: 1 }} {...submitBtnProps} />
             </Container>
         </DismissKeyboard>
     );
