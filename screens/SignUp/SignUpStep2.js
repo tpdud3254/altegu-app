@@ -9,6 +9,8 @@ import { ORDINARY } from "../../constant";
 function SignUpStep2({ route }) {
     const navigation = useNavigation();
 
+    console.log("member type : ", route?.params?.memberType);
+
     const onNextStep = () => {
         if (route?.params?.memberType === ORDINARY) {
             navigation.navigate("SignUpStep4", {

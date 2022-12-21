@@ -8,6 +8,8 @@ import SubmitLayout from "../../component/presenter/layout/SubmitLayout";
 function SignUpStep3({ route }) {
     const navigation = useNavigation();
 
+    console.log("member type : ", route?.params?.memberType);
+
     const onNextStep = () => {
         navigation.navigate("SignUpStep4", {
             memberType: route?.params?.memberType,

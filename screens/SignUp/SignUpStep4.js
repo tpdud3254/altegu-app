@@ -46,6 +46,8 @@ function SignUpStep4({ route }) {
     const [blockAllChecked, setBlockAllChecked] = useState(false);
     const navigation = useNavigation();
 
+    console.log("member type : ", route?.params?.memberType);
+
     useEffect(() => {
         if (isAllChecked) {
             const newCheckArr = [true, true, true, true, true];
