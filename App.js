@@ -10,12 +10,13 @@ import { ThemeProvider } from "styled-components/native";
 import { theme } from "./styles";
 import IntroNavigator from "./navigation/IntroNavigator";
 import "react-native-gesture-handler";
+import MainNavigator from "./navigation/MainNavigator";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
     const [appIsReady, setAppIsReady] = useState(false);
-    const isLoggedIn = false; //TODO: 전역 변수로 바꾸기
+    const isLoggedIn = true; //TODO: 전역 변수로 바꾸기
     useEffect(() => {
         async function prepare() {
             try {
@@ -48,7 +49,7 @@ export default function App() {
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
             <ThemeProvider theme={theme}>
                 <NavigationContainer>
-                    {isLoggedIn ? <Text>logged in</Text> : <IntroNavigator />}
+                    {isLoggedIn ? <MainNavigator /> : <IntroNavigator />}
                 </NavigationContainer>
             </ThemeProvider>
         </View>

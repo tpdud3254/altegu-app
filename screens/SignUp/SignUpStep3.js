@@ -22,6 +22,17 @@ const ButtonRow = styled.View`
     flex-direction: row;
     justify-content: space-around;
 `;
+
+const GuideTextContainer = styled.View`
+    align-items: center;
+`;
+const GuideText = styled.Text`
+    font-weight: 600;
+    font-size: 20px;
+    color: ${theme.darkFontColor};
+    margin-top: 3px;
+`;
+
 function SignUpStep3({ route }) {
     const navigation = useNavigation();
 
@@ -84,6 +95,12 @@ function SignUpStep3({ route }) {
                     />
                 </ButtonRow>
             </ButtonContainer>
+            <GuideTextContainer>
+                <GuideText>
+                    작업지역은 언제든지 추가, 제거 및 변경이 가능합니다.
+                </GuideText>
+                <GuideText>작업을 희망하시는 위치를 선택해 주세요.</GuideText>
+            </GuideTextContainer>
         </SubmitLayout>
     );
 }

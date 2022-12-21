@@ -33,20 +33,20 @@ const Terms = styled.View`
 
 const TermsButton = styled.TouchableOpacity``;
 
-const GuideText = styled.Text`
-    font-weight: 600;
-    font-size: 18px;
-    color: ${theme.darkFontColor};
-    bottom: 0;
-    position: absolute;
-`;
-
 const TermsText = styled.Text`
     font-size: ${(props) => (props.bold ? 27 : 25)}px;
     color: ${(props) => (props.bold ? "black" : props.theme.darkFontColor)};
     font-weight: ${(props) => (props.bold ? "600" : "400")};
     text-decoration-line: ${(props) =>
         props.underline ? "underline" : "none"};
+`;
+
+const GuideText = styled.Text`
+    font-weight: 600;
+    font-size: 18px;
+    color: ${theme.darkFontColor};
+    bottom: 0;
+    position: absolute;
 `;
 
 function SignUpStep4({ route }) {
