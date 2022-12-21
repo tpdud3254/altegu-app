@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import DetailTerms from "../screens/DetailTerms";
 import SignUp from "../screens/SignUp/SignUp";
 import SignUpStep1 from "../screens/SignUp/SignUpStep1";
 import SignUpStep2 from "../screens/SignUp/SignUpStep2";
@@ -33,6 +34,7 @@ export default function SignUpNavigator() {
                 component={TakePhoto}
                 options={{ headerShown: false }}
             />
+            <Stack.Screen name="DetailTerms" component={DetailTerms} />
         </Stack.Navigator>
     );
 }

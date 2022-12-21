@@ -9,14 +9,16 @@ import Checkbox from "expo-checkbox";
 import { theme } from "../../styles";
 
 const termsTexts = [
-    "만 14세 이상입니다. (필수)",
-    "서비스 이용약관 (필수)",
-    "개인정보 수집 및 이용 동의 (필수)",
-    "위치 서비스 이용 동의 (필수)",
+    "만 14세 이상입니다.",
+    "서비스 이용약관",
+    "개인정보 수집 및 이용 동의",
+    "위치 서비스 이용 동의",
     "이벤트 및 할인 혜택 안내 동의",
 ];
 
-const Container = styled.View``;
+const Container = styled.View`
+    flex: 1;
+`;
 
 const Wrapper = styled.View`
     padding: 0px 25px 0px 25px;
@@ -28,10 +30,23 @@ const Terms = styled.View`
     margin-top: 35px;
     align-items: center;
 `;
+
+const TermsButton = styled.TouchableOpacity``;
+
+const GuideText = styled.Text`
+    font-weight: 600;
+    font-size: 18px;
+    color: ${theme.darkFontColor};
+    bottom: 0;
+    position: absolute;
+`;
+
 const TermsText = styled.Text`
     font-size: ${(props) => (props.bold ? 27 : 25)}px;
     color: ${(props) => (props.bold ? "black" : props.theme.darkFontColor)};
     font-weight: ${(props) => (props.bold ? "600" : "400")};
+    text-decoration-line: ${(props) =>
+        props.underline ? "underline" : "none"};
 `;
 
 function SignUpStep4({ route }) {
@@ -87,6 +102,13 @@ function SignUpStep4({ route }) {
             memberType: route?.params?.memberType,
         });
     };
+
+    const ShowDetailTerms = (index) => {
+        navigation.navigate("DetailTerms", {
+            index,
+            title: termsTexts[index],
+        });
+    };
     return (
         <SubmitLayout submitBtnProps={{ value: "동의하기", fn: onNextStep }}>
             <Container>
@@ -103,7 +125,12 @@ function SignUpStep4({ route }) {
                     </Terms>
                     {termsTexts.map((text, index) => (
                         <Terms key={index}>
-                            <TermsText>{text}</TermsText>
+                            <TermsButton onPress={() => ShowDetailTerms(index)}>
+                                <TermsText underline>
+                                    {text}
+                                    {index < 4 ? " (필수)" : ""}
+                                </TermsText>
+                            </TermsButton>
                             <Checkbox
                                 style={{ width: 30, height: 30 }}
                                 value={checkArr[index]}
@@ -115,6 +142,9 @@ function SignUpStep4({ route }) {
                         </Terms>
                     ))}
                 </Wrapper>
+                <GuideText>
+                    각 항목 클릭 시 상세 내용을 보실 수 있습니다
+                </GuideText>
             </Container>
         </SubmitLayout>
     );

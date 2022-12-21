@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { Text, View } from "react-native";
+import DefaultLayout from "./component/presenter/layout/DefaultLayout";
 
 function Intro() {
     return (
-        <View>
+        <DefaultLayout>
             <Text>Intro</Text>
-        </View>
+        </DefaultLayout>
     );
 }
 
