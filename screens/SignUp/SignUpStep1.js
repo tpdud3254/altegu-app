@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FormLayout from "../../component/presenter/layout/FormLayout";
 import Title from "../../component/presenter/text/Title";

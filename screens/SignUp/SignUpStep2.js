@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import FormLayout from "../../component/presenter/layout/FormLayout";
 import { ORDINARY } from "../../constant";
 import Button from "../../component/presenter/button/Button";
+import Title from "../../component/presenter/text/Title";
 
 function SignUpStep2({ route }) {
     const navigation = useNavigation();
@@ -27,6 +28,7 @@ function SignUpStep2({ route }) {
 
     return (
         <FormLayout submitBtnProps={{ value: "다음으로", fn: onNextStep }}>
+            <Title value="휴대폰 인증 받기" color="#555555" />
             <Button value="휴대폰 인증" fn={onNextStep} />
         </FormLayout>
     );
