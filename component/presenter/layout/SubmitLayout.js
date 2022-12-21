@@ -6,7 +6,7 @@ import DismissKeyboard from "../DismissKeyboard";
 
 const Container = styled.View`
     flex: 1;
-    align-items: center;
+
     justify-content: space-between;
     background-color: ${(props) => props.theme.backgroundColor};
     padding: 20px 10px;

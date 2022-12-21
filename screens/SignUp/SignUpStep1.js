@@ -21,7 +21,7 @@ function SignUpStep1({ route }) {
 
     const onNextStep = () => {
         navigation.navigate("SignUpStep2", {
-            memberType: route?.params?.memberType,
+            memberType: route?.params?.memberType, //TODO: Redux 적용
         });
     };
 
