@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { Text, View } from "react-native";
 import DefaultLayout from "../../component/presenter/layout/DefaultLayout";
 import { TextInput } from "../../component/presenter/input/TextInput";
+import { Picker } from "@react-native-picker/picker";
+import Checkbox from "expo-checkbox";
+import { theme } from "../../styles";
 
 const Wrapper = styled.View`
     width: 100%;
@@ -17,7 +20,7 @@ const Row = styled.View`
 
 const Title = styled.Text`
     font-size: 30px;
-    width: 26%;
+    width: 28%;
 `;
 
 const Input = styled(TextInput)`
@@ -26,10 +29,23 @@ const Input = styled(TextInput)`
 `;
 
 const LargeInput = styled(TextInput)`
-    width: 74%;
+    width: 72%;
 `;
 
 function RegistWork({ route }) {
+    const [selectedLanguage, setSelectedLanguage] = useState();
+    const [isChecked, setChecked] = useState(false);
+
+    const pickerRef = useRef();
+
+    function open() {
+        pickerRef.current.focus();
+    }
+
+    function close() {
+        pickerRef.current.blur();
+    }
+
     return (
         <DefaultLayout>
             <Wrapper>
@@ -54,7 +70,17 @@ function RegistWork({ route }) {
                 </Row>
                 <Row>
                     <Title>작업물량</Title>
-                    <LargeInput />
+                    <Picker
+                        ref={pickerRef}
+                        selectedValue={selectedLanguage}
+                        onValueChange={(itemValue, itemIndex) =>
+                            setSelectedLanguage(itemValue)
+                        }
+                        style={{ width: "74%" }}
+                    >
+                        <Picker.Item label="Java" value="java" />
+                        <Picker.Item label="JavaScript" value="js" />
+                    </Picker>
                 </Row>
                 <Row>
                     <Title>휴대전화</Title>
@@ -69,6 +95,30 @@ function RegistWork({ route }) {
                 <Row>
                     <Title></Title>
                     <LargeInput />
+                </Row>
+                <Row>
+                    <Title>올림/내림</Title>
+                    <Checkbox
+                        style={{ width: 30, height: 30 }}
+                        value={isChecked}
+                        onValueChange={setChecked}
+                        color={isChecked ? theme.main : undefined}
+                    />
+                    <Text>올림</Text>
+                    <Checkbox
+                        style={{ width: 30, height: 30 }}
+                        value={isChecked}
+                        onValueChange={setChecked}
+                        color={isChecked ? theme.main : undefined}
+                    />
+                    <Text>내림</Text>
+                    <Checkbox
+                        style={{ width: 30, height: 30 }}
+                        value={isChecked}
+                        onValueChange={setChecked}
+                        color={isChecked ? theme.main : undefined}
+                    />
+                    <Text>양사</Text>
                 </Row>
             </Wrapper>
         </DefaultLayout>
