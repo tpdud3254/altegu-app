@@ -1,12 +1,15 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { Image, Text, View } from "react-native";
 import TabIcon from "../component/presenter/icon/TabIcons";
 import Home from "../screens/Home";
-import RegistWork from "../screens/RegistWork";
+import RegistWork from "../screens/RegistWork/RegistWork";
+import SelectWorkTheme from "../screens/RegistWork/SelectWorkTheme";
 import Works from "../screens/Works";
 
 const Tabs = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function TabsNavigator() {
     return (
@@ -35,7 +38,7 @@ export default function TabsNavigator() {
                 component={Home}
             />
             <Tabs.Screen
-                name="RegistWork"
+                name="TabRegistWork"
                 options={{
                     tabBarIcon: ({ focused, color, size }) => (
                         <TabIcon
@@ -46,8 +49,25 @@ export default function TabsNavigator() {
                         />
                     ),
                 }}
-                component={RegistWork}
-            />
+            >
+                {() => (
+                    <Stack.Navigator>
+                        <Stack.Screen
+                            name="SelectWorkTheme"
+                            component={SelectWorkTheme}
+                            options={{ headerShown: false }}
+                        />
+                        <Stack.Screen
+                            name="RegistWork"
+                            component={RegistWork}
+                            options={{
+                                headerBackTitleVisible: false,
+                                title: "작업 등록",
+                            }}
+                        />
+                    </Stack.Navigator>
+                )}
+            </Tabs.Screen>
             <Tabs.Screen
                 name="Works"
                 options={{
