@@ -1,10 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FlatList, useWindowDimensions } from "react-native";
 import styled from "styled-components/native";
 import CircleButton from "../component/presenter/button/CircleButton";
 import VerticalDivider from "../component/presenter/divider/VerticalDivider";
 import { theme } from "../styles";
+import * as Location from "expo-location";
 
 const imagePath = [
     require(`../assets/images/intro/intro_1.jpeg`),
@@ -64,6 +65,18 @@ export default function Intro() {
     const navigation = useNavigation();
     const flatListRef = useRef();
     const [imageIndex, setImageIndex] = useState(0);
+    const [ok, setOk] = useState(true);
+
+    const askLocationPermission = async () => {
+        const { granted } = await Location.requestForegroundPermissionsAsync();
+        if (!granted) {
+            setOk(false);
+        }
+    };
+
+    useEffect(() => {
+        askLocationPermission();
+    }, []);
 
     const renderIntro = ({ item: path }) => (
         <IntroImage size={imageSize} source={path} />
@@ -82,52 +95,65 @@ export default function Intro() {
 
     return (
         <Container>
-            <Top>
-                <FlatList
-                    horizontal
-                    pagingEnabled
-                    showsHorizontalScrollIndicator={false}
-                    data={imagePath}
-                    renderItem={renderIntro}
-                    ref={flatListRef}
-                    onMomentumScrollEnd={(event) => {
-                        const index = Math.floor(
-                            Math.floor(event.nativeEvent.contentOffset.x) /
-                                Math.floor(
-                                    event.nativeEvent.layoutMeasurement.width
-                                )
-                        );
-                        setImageIndex(index);
-                    }}
-                />
-                <TopButtonWrapper>
-                    {imagePath.map((__, index) => (
-                        <CircleButton
-                            key={index}
-                            onPress={() => scrollToIntroImage(index)}
-                            color={
-                                imageIndex === index ? theme.main : "#bcbcbc"
-                            }
-                            {...topButtonProps}
-                        />
-                    ))}
-                </TopButtonWrapper>
-            </Top>
-            <Bottom>
-                <BottomButtonWrapper>
-                    <CircleButton
-                        onPress={goToSignIn}
-                        value="로그인"
-                        {...bottomButtonProps}
-                    />
-                    <VerticalDivider color="#bcbcbc" />
-                    <CircleButton
-                        onPress={goToSignUp}
-                        value="회원가입"
-                        {...bottomButtonProps}
-                    />
-                </BottomButtonWrapper>
-            </Bottom>
+            {
+                ok ? (
+                    <>
+                        <Top>
+                            <FlatList
+                                horizontal
+                                pagingEnabled
+                                showsHorizontalScrollIndicator={false}
+                                data={imagePath}
+                                renderItem={renderIntro}
+                                ref={flatListRef}
+                                onMomentumScrollEnd={(event) => {
+                                    const index = Math.floor(
+                                        Math.floor(
+                                            event.nativeEvent.contentOffset.x
+                                        ) /
+                                            Math.floor(
+                                                event.nativeEvent
+                                                    .layoutMeasurement.width
+                                            )
+                                    );
+                                    setImageIndex(index);
+                                }}
+                            />
+                            <TopButtonWrapper>
+                                {imagePath.map((__, index) => (
+                                    <CircleButton
+                                        key={index}
+                                        onPress={() =>
+                                            scrollToIntroImage(index)
+                                        }
+                                        color={
+                                            imageIndex === index
+                                                ? theme.main
+                                                : "#bcbcbc"
+                                        }
+                                        {...topButtonProps}
+                                    />
+                                ))}
+                            </TopButtonWrapper>
+                        </Top>
+                        <Bottom>
+                            <BottomButtonWrapper>
+                                <CircleButton
+                                    onPress={goToSignIn}
+                                    value="로그인"
+                                    {...bottomButtonProps}
+                                />
+                                <VerticalDivider color="#bcbcbc" />
+                                <CircleButton
+                                    onPress={goToSignUp}
+                                    value="회원가입"
+                                    {...bottomButtonProps}
+                                />
+                            </BottomButtonWrapper>
+                        </Bottom>
+                    </>
+                ) : null //TODO: 어플종료 추가
+            }
         </Container>
     );
 }

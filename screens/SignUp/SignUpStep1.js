@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, ScrollView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FormLayout from "../../component/presenter/layout/FormLayout";
 import Title from "../../component/presenter/text/Title";
@@ -15,6 +15,8 @@ import PropTypes from "prop-types";
 import AutoHeightImage from "react-native-auto-height-image";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../styles";
+import { useForm } from "react-hook-form";
+import Toast from "react-native-toast-message";
 
 const ImageContainer = styled.View`
     min-height: 200px;
@@ -46,17 +48,34 @@ const RecommenderText = styled.Text`
 function SignUpStep1({ route }) {
     const navigation = useNavigation();
     const [textSecure, setTextSecure] = useState(true);
+    const { register, handleSubmit, setValue, getValues, watch } = useForm();
 
-    console.log("member type : ", route?.params?.memberType);
+    const passwordRef = useRef();
 
-    console.log(route?.params?.file);
+    useEffect(() => {
+        register("name", {
+            required: true,
+        });
+        register("password", {
+            required: true,
+        });
+    }, [register]);
+
+    const onNext = (nextOne) => {
+        nextOne?.current?.focus();
+    };
+
     const onClick = () => {
         setTextSecure((prev) => !prev);
     };
 
-    const onNextStep = () => {
+    const onNextStep = (data) => {
         navigation.navigate("SignUpStep2", {
             memberType: route?.params?.memberType, //TODO: Redux 적용
+            data: {
+                userType: route?.params?.memberType,
+                ...data,
+            },
         });
     };
 
@@ -66,8 +85,51 @@ function SignUpStep1({ route }) {
         });
     };
 
+    const onCompleted = (data) => {
+        const {
+            createAccount: { ok },
+        } = data;
+
+        const { userName, password } = getValues();
+        if (ok) {
+            navigation.navigate(nav.LogIn, {
+                userName,
+                password,
+            });
+        }
+    };
+
+    const onValid = ({ name, password }) => {
+        if (name.length < 2) {
+            Toast.show({
+                type: "error",
+                text1: "이름을 2자리 이상 입력해주세요.",
+            });
+            return;
+        }
+        if (password.length < 8) {
+            Toast.show({
+                type: "error",
+                text1: "비밀번호를 8자리 이상 입력해주세요.",
+            });
+
+            return;
+        }
+
+        onNextStep({ name, password });
+    };
+
     return (
-        <FormLayout submitBtnProps={{ value: "다음으로", fn: onNextStep }}>
+        <FormLayout
+            submitBtnProps={{
+                value: "다음으로",
+                fn: handleSubmit(onValid),
+                disabled: !(watch("name") && watch("password")),
+            }}
+            keyboardVerticalOffset={
+                route?.params?.memberType === ORDINARY ? 0 : 80
+            }
+        >
             <Title value="회원가입" color="#555555" />
             <ScrollView style={{ marginBottom: 55 }}>
                 <InputItem
@@ -78,12 +140,15 @@ function SignUpStep1({ route }) {
                     }
                 >
                     <TextInput
+                        autoFocus={true}
                         placeholder={
                             route?.params?.memberType === ORDINARY
-                                ? "이름"
+                                ? "이름 (2자리 이상)"
                                 : "이름 / 상호명"
                         }
                         returnKeyType="next"
+                        onSubmitEditing={() => onNext(passwordRef)}
+                        onChangeText={(text) => setValue("name", text)}
                     />
                 </InputItem>
                 <InputBtnItem
@@ -92,9 +157,11 @@ function SignUpStep1({ route }) {
                     fn={onClick}
                 >
                     <Input
-                        placeholder="비밀번호"
+                        ref={passwordRef}
+                        placeholder="비밀번호 (8자리 이상)"
                         secureTextEntry={textSecure}
                         returnKeyType="done"
+                        onChangeText={(text) => setValue("password", text)}
                     />
                 </InputBtnItem>
                 {route?.params?.memberType !== ORDINARY ? (

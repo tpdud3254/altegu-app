@@ -9,6 +9,7 @@ const SButton = styled.TouchableOpacity`
     align-items: center;
     margin: 10px 0px 10px 0px;
     width: 100%;
+    opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `;
 
 const ButtonText = styled.Text`
@@ -17,13 +18,14 @@ const ButtonText = styled.Text`
     font-weight: 500;
 `;
 
-function SubmitButton({ value, color, textSize, textColor, fn }) {
+function SubmitButton({ value, color, textSize, textColor, fn, disabled }) {
     return (
         <SButton
             color={color}
             textSize={textSize}
             textColor={textColor}
             onPress={fn}
+            disabled={disabled}
         >
             <ButtonText>{value}</ButtonText>
         </SButton>

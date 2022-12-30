@@ -7,6 +7,8 @@ import SubmitLayout from "../../component/presenter/layout/SubmitLayout";
 import Title from "../../component/presenter/text/Title";
 import Checkbox from "expo-checkbox";
 import { theme } from "../../styles";
+import * as Location from "expo-location";
+import axios from "axios";
 
 const termsTexts = [
     "만 14세 이상입니다.",
@@ -59,17 +61,23 @@ function SignUpStep4({ route }) {
     ]);
     const [isAllChecked, setAllChecked] = useState(false);
     const [blockAllChecked, setBlockAllChecked] = useState(false);
+    const [isAgree, setIsAgree] = useState(true);
     const navigation = useNavigation();
 
-    console.log("member type : ", route?.params?.memberType);
+    console.log("params", route?.params);
 
-    useEffect(() => {
-        if (isAllChecked) {
+    const clickAllCheckButton = (value) => {
+        if (value) {
+            setAllChecked(true);
+            setIsAgree(false);
             const newCheckArr = [true, true, true, true, true];
 
             setCheckArr(newCheckArr);
             setBlockAllChecked(false);
         } else {
+            setAllChecked(false);
+            setIsAgree(true);
+
             if (!blockAllChecked) {
                 const newCheckArr = [false, false, false, false, false];
 
@@ -78,7 +86,7 @@ function SignUpStep4({ route }) {
                 setBlockAllChecked(false);
             }
         }
-    }, [isAllChecked]);
+    };
 
     const clickCheckButton = (value, index) => {
         const newCheckArr = [...checkArr];
@@ -91,13 +99,61 @@ function SignUpStep4({ route }) {
 
         if (uncheckedArr.length < 1) {
             setAllChecked(true);
+            setIsAgree(false);
         } else {
             setBlockAllChecked(true);
             setAllChecked(false);
+
+            if (
+                uncheckedArr.length === 1 &&
+                !newCheckArr[newCheckArr.length - 1]
+            ) {
+                setIsAgree(false);
+            } else {
+                setIsAgree(true);
+            }
         }
     };
 
-    const onNextStep = () => {
+    const onNextStep = async () => {
+        const {
+            coords: { latitude, longitude },
+        } = await Location.getCurrentPositionAsync({
+            accuracy: 5,
+        });
+
+        const location = await Location.reverseGeocodeAsync(
+            { latitude, longitude },
+            { useGoogleMaps: false }
+        );
+
+        const accessedRegion = `${location[0].city}>${
+            location[0].subregion ? location[0].subregion : location[0].district
+        }`;
+
+        // const workCategory=1 //TODO:업종
+        const sendingData = {
+            sms: true,
+            accessedRegion,
+
+            ...route?.params?.data,
+        };
+
+        console.log(sendingData);
+
+        await axios({
+            url: "https://0077-211-59-182-118.jp.ngrok.io/users/signup",
+            method: "POST",
+            header: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=UTP-8",
+            },
+            withCredentials: true,
+            data: sendingData,
+        }).then(({ data }) => {
+            console.log(data);
+        });
+
         navigation.navigate("SignUpStep5", {
             memberType: route?.params?.memberType,
         });
@@ -110,7 +166,13 @@ function SignUpStep4({ route }) {
         });
     };
     return (
-        <SubmitLayout submitBtnProps={{ value: "동의하기", fn: onNextStep }}>
+        <SubmitLayout
+            submitBtnProps={{
+                value: "동의하기",
+                fn: onNextStep,
+                disabled: isAgree,
+            }}
+        >
             <Container>
                 <Title value="약관동의" color="#555555" />
                 <Wrapper>
@@ -119,7 +181,7 @@ function SignUpStep4({ route }) {
                         <Checkbox
                             style={{ width: 40, height: 40 }}
                             value={isAllChecked}
-                            onValueChange={setAllChecked}
+                            onValueChange={clickAllCheckButton}
                             color={isAllChecked ? theme.main : undefined}
                         />
                     </Terms>

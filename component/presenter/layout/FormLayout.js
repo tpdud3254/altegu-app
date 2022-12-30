@@ -18,8 +18,8 @@ export default function FormLayout({ children, submitBtnProps }) {
             <Container>
                 <KeyboardAvoidingView
                     style={{ width: "100%", flex: 5 }}
-                    behavior="position"
-                    keyboardVerticalOffset={Platform.OS === "ios" ? 50 : 0}
+                    behavior="padding"
+                    keyboardVerticalOffset={80}
                 >
                     {children}
                 </KeyboardAvoidingView>

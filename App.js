@@ -11,12 +11,14 @@ import { theme } from "./styles";
 import IntroNavigator from "./navigation/IntroNavigator";
 import "react-native-gesture-handler";
 import MainNavigator from "./navigation/MainNavigator";
+import Toast from "react-native-toast-message";
+import { toastConfig } from "./component/presenter/Toast";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
     const [appIsReady, setAppIsReady] = useState(false);
-    const isLoggedIn = true; //TODO: 전역 변수로 바꾸기
+    const isLoggedIn = false; //TODO: 전역 변수로 바꾸기
     useEffect(() => {
         async function prepare() {
             try {
@@ -51,6 +53,11 @@ export default function App() {
                 <NavigationContainer>
                     {isLoggedIn ? <MainNavigator /> : <IntroNavigator />}
                 </NavigationContainer>
+                <Toast
+                    position="bottom"
+                    bottomOffset="90"
+                    config={toastConfig}
+                />
             </ThemeProvider>
         </View>
     );

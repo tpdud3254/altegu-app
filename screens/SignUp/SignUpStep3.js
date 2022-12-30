@@ -36,7 +36,7 @@ const GuideText = styled.Text`
 function SignUpStep3({ route }) {
     const navigation = useNavigation();
 
-    console.log("member type : ", route?.params?.memberType);
+    console.log("member type : ", route?.params);
 
     const onNextStep = () => {
         navigation.navigate("SignUpStep4", {
