@@ -20,6 +20,7 @@ function SignUpStep2({ route }) {
 
     useEffect(() => {
         //TODO:test code
+        //TODO:존재하는 핸드폰 번호 인지 체크
         register("userName");
         register("gender");
         register("birth");
@@ -28,7 +29,7 @@ function SignUpStep2({ route }) {
         setValue("userName", "고세영");
         setValue("gender", "여");
         setValue("birth", "950124");
-        setValue("phone", "01090665452");
+        setValue("phone", "01032655452");
     }, [register]);
 
     console.log("member type : ", route?.params);

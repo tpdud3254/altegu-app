@@ -18,7 +18,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
     const [appIsReady, setAppIsReady] = useState(false);
-    const isLoggedIn = false; //TODO: 전역 변수로 바꾸기
+    const isLoggedIn = true; //TODO: 전역 변수로 바꾸기
     useEffect(() => {
         async function prepare() {
             try {

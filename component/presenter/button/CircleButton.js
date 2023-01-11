@@ -8,7 +8,7 @@ const Button = styled.TouchableOpacity`
     height: ${(props) => props.size || 10}px;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
+    border-radius: 100px;
     margin: ${(props) => props.margin || 0};
 `;
 

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const SButton = styled.TouchableOpacity`
     background-color: ${(props) => props.color || "#888888"};
-    padding: 15px 10px;
+    padding: 10px 10px;
     border-radius: 5px;
     align-items: center;
     margin: 5px 0px;

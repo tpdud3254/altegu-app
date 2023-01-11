@@ -116,47 +116,46 @@ function SignUpStep4({ route }) {
     };
 
     const onNextStep = async () => {
-        const {
-            coords: { latitude, longitude },
-        } = await Location.getCurrentPositionAsync({
-            accuracy: 5,
-        });
-
-        const location = await Location.reverseGeocodeAsync(
-            { latitude, longitude },
-            { useGoogleMaps: false }
-        );
-
-        const accessedRegion = `${location[0].city}>${
-            location[0].subregion ? location[0].subregion : location[0].district
-        }`;
-
-        // const workCategory=1 //TODO:업종
-        const sendingData = {
-            sms: true,
-            accessedRegion,
-
-            ...route?.params?.data,
-        };
-
-        console.log(sendingData);
-
-        await axios({
-            url: "https://0077-211-59-182-118.jp.ngrok.io/users/signup",
-            method: "POST",
-            header: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=UTP-8",
-            },
-            withCredentials: true,
-            data: sendingData,
-        }).then(({ data }) => {
-            console.log(data);
-        });
-
         navigation.navigate("SignUpStep5", {
             memberType: route?.params?.memberType,
         });
+
+        // const {
+        //     coords: { latitude, longitude },
+        // } = await Location.getCurrentPositionAsync({
+        //     accuracy: 5,
+        // });
+
+        // const location = await Location.reverseGeocodeAsync(
+        //     { latitude, longitude },
+        //     { useGoogleMaps: false }
+        // );
+
+        // const accessedRegion = `${location[0].city}>${
+        //     location[0].subregion ? location[0].subregion : location[0].district
+        // }`;
+
+        // // const workCategory=1 //TODO:업종
+        // const sendingData = {
+        //     sms: true,
+        //     accessedRegion,
+        //     ...route?.params?.data,
+        // };
+
+        // console.log(sendingData);
+
+        // axios({
+        //     url: "https://d367-112-171-113-108.jp.ngrok.io/users/signup",
+        //     method: "POST",
+        //     header: {
+        //         Accept: "application/json",
+        //         "Content-Type": "application/json;charset=UTP-8",
+        //     },
+        //     withCredentials: true,
+        //     data: sendingData,
+        // }).then(({ data }) => {
+        //     console.log(data);
+        // });
     };
 
     const ShowDetailTerms = (index) => {

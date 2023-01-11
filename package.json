@@ -36,6 +36,7 @@
     "react-native-screens": "^3.18.2",
     "react-native-tab-view": "^3.3.2",
     "react-native-toast-message": "^2.1.5",
+    "redux": "^4.2.0",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {

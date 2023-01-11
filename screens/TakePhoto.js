@@ -22,7 +22,7 @@ const TakePhotoBtn = styled.TouchableOpacity`
     width: 100px;
     height: 100px;
     background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
+    border-radius: 100px;
     border: 2px solid rgba(255, 255, 255, 0.8);
 `;
 
@@ -31,7 +31,7 @@ const CloseBtn = styled.TouchableOpacity`
     left: 20px;
     background-color: #00000055;
     align-self: flex-start;
-    border-radius: 50%;
+    border-radius: 100px;
 `;
 
 const PhotoActions = styled(Actions)`
@@ -54,6 +54,7 @@ function TakePhoto({ navigation, route }) {
     const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
     const [cameraReady, setCameraReady] = useState(false);
 
+    console.log(route);
     const getPermissions = async () => {
         const { granted } = await Camera.requestCameraPermissionsAsync(
             setGranted(granted)

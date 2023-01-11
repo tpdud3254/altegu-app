@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, KeyboardAvoidingView } from "react-native";
+import { Platform, KeyboardAvoidingView, View } from "react-native";
 import styled from "styled-components/native";
 import SubmitButton from "../button/SubmitButton";
 import DismissKeyboard from "../DismissKeyboard";
@@ -16,14 +16,17 @@ export default function FormLayout({ children, submitBtnProps }) {
     return (
         <DismissKeyboard>
             <Container>
-                <KeyboardAvoidingView
+                <View
                     style={{ width: "100%", flex: 5 }}
-                    behavior="padding"
-                    keyboardVerticalOffset={80}
+                    // behavior="padding"
+                    // keyboardVerticalOffset={80}
                 >
                     {children}
-                </KeyboardAvoidingView>
-                <SubmitButton style={{ flex: 1 }} {...submitBtnProps} />
+                </View>
+                <SubmitButton
+                    {...submitBtnProps}
+                    // style={{ marginBottom: 50 }}
+                />
             </Container>
         </DismissKeyboard>
     );

@@ -19,7 +19,9 @@ export default function TabsNavigator() {
                 tabBarShowLabel: false,
                 tabBarStyle: {
                     borderTopColor: "rgba(0,0,0,0.3)",
-                    paddingTop: 15,
+                    paddingTop: 0,
+                    height: 70,
+                    // marginBottom: 0,
                 },
             }}
         >

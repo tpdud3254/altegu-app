@@ -39,8 +39,12 @@ function SignUpStep3({ route }) {
     console.log("member type : ", route?.params);
 
     const onNextStep = () => {
+        const data = { workRegion: [1, 2] };
+        const newData = { ...route?.params?.data, ...data };
+
         navigation.navigate("SignUpStep4", {
             memberType: route?.params?.memberType,
+            data: newData,
         });
     };
     return (
@@ -56,13 +60,13 @@ function SignUpStep3({ route }) {
                     <Button
                         value="서울시"
                         color={theme.sub.yellow}
-                        textSize="23"
+                        textSize={23}
                         width="47%"
                     />
                     <Button
                         value="인천시"
                         color={theme.sub.yellow}
-                        textSize="23"
+                        textSize={23}
                         width="47%"
                     />
                 </ButtonRow>
@@ -70,13 +74,13 @@ function SignUpStep3({ route }) {
                     <Button
                         value="경기 북서부"
                         color={theme.sub.yellow}
-                        textSize="23"
+                        textSize={23}
                         width="47%"
                     />
                     <Button
                         value="경기 북동부"
                         color={theme.sub.yellow}
-                        textSize="23"
+                        textSize={23}
                         width="47%"
                     />
                 </ButtonRow>
@@ -84,13 +88,13 @@ function SignUpStep3({ route }) {
                     <Button
                         value="경기 남서부"
                         color={theme.sub.yellow}
-                        textSize="23"
+                        textSize={23}
                         width="47%"
                     />
                     <Button
                         value="경기 남동부"
                         color={theme.sub.yellow}
-                        textSize="23"
+                        textSize={23}
                         width="47%"
                     />
                 </ButtonRow>

@@ -27,13 +27,13 @@ const Button = styled.TouchableOpacity`
 `;
 const MainText = styled.Text`
     color: white;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 600;
     margin-bottom: 5px;
 `;
 const SubText = styled.Text`
     color: white;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 500;
 `;
 

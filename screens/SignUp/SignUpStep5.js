@@ -12,6 +12,7 @@ function SignUpStep5({ route, navigation }) {
     const onNextStep = () => {
         console.log("done");
         //TODOS:로그인 설정 (로그인 후 로그인 변수 true)
+        // navigation.navigate("Home");
     };
     return (
         <SubmitLayout submitBtnProps={{ value: "시작하기", fn: onNextStep }}>
