@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SubmitLayout from "../../component/presenter/layout/SubmitLayout";
-import Title from "../../component/presenter/text/Title";
+import Title from "../../component/presenter/title/Title";
 import Checkbox from "expo-checkbox";
 import { theme } from "../../styles";
 import * as Location from "expo-location";

@@ -1,11 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, useWindowDimensions } from "react-native";
+import { FlatList, Image, useWindowDimensions, View } from "react-native";
 import styled from "styled-components/native";
 import CircleButton from "../component/presenter/button/CircleButton";
 import VerticalDivider from "../component/presenter/divider/VerticalDivider";
 import { theme } from "../styles";
 import * as Location from "expo-location";
+import Logo from "../component/presenter/Logo";
 
 const imagePath = [
     require(`../assets/images/intro/intro_1.jpeg`),
@@ -22,6 +23,7 @@ const Container = styled.View`
 const Top = styled.View`
     flex: 2.5;
     padding-top: 50px;
+    align-items: center;
 `;
 
 const Bottom = styled.View`
@@ -48,15 +50,15 @@ const BottomButtonWrapper = styled.View`
 `;
 
 const topButtonProps = {
-    size: 35,
-    margin: "0px 10px 0px 10px",
+    size: 25,
+    margin: "0px 5px 0px 5px",
 };
 
 const bottomButtonProps = {
     size: 100,
-    textSize: 25,
-    textWeight: 600,
-    textColor: "black",
+    textSize: 22,
+    textWeight: 400,
+    textColor: "#555555",
     color: "white",
 };
 
@@ -84,6 +86,7 @@ export default function Intro() {
 
     const scrollToIntroImage = (index) => {
         flatListRef.current.scrollToIndex({ index });
+        setImageIndex(index);
     };
 
     const goToSignIn = () => {
@@ -99,6 +102,7 @@ export default function Intro() {
                 ok ? (
                     <>
                         <Top>
+                            <Logo />
                             <FlatList
                                 horizontal
                                 pagingEnabled
@@ -128,8 +132,8 @@ export default function Intro() {
                                         }
                                         color={
                                             imageIndex === index
-                                                ? theme.main
-                                                : "#bcbcbc"
+                                                ? theme.sub.yellow
+                                                : "#eeeeee"
                                         }
                                         {...topButtonProps}
                                     />
@@ -143,7 +147,7 @@ export default function Intro() {
                                     value="로그인"
                                     {...bottomButtonProps}
                                 />
-                                <VerticalDivider color="#bcbcbc" />
+                                <VerticalDivider color="#cccccc" />
                                 <CircleButton
                                     onPress={goToSignUp}
                                     value="회원가입"

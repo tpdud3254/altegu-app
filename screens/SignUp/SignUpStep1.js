@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Alert, ScrollView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FormLayout from "../../component/presenter/layout/FormLayout";
-import Title from "../../component/presenter/text/Title";
+import Title from "../../component/presenter/title/Title";
 import InputItem from "../../component/presenter/item/InputItem";
 import { TextInput } from "../../component/presenter/input/TextInput";
 import InputBtnItem from "../../component/presenter/item/InputBtnItem";

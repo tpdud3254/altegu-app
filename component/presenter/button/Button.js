@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
+import { fonts } from "../../../styles";
 
 const SButton = styled.TouchableOpacity`
     background-color: ${(props) => props.color || "#888888"};
-    padding: 10px 10px;
     border-radius: 5px;
     align-items: center;
     margin: 5px 0px;
@@ -16,7 +16,8 @@ const SButton = styled.TouchableOpacity`
 const ButtonText = styled.Text`
     font-size: ${(props) => props.textSize || 18}px;
     color: ${(props) => props.textColor || props.theme.lightFontColor};
-    font-weight: 500;
+
+    font-family: ${fonts.content};
 `;
 
 function Button({ value, color, textSize, textColor, fn, width, height }) {

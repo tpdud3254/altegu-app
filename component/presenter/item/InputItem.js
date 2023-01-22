@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
-import ItemTitle from "../text/ItemTitle";
+import ItemTitle from "../title/ItemTitle";
 
 const InputContainer = styled.View`
     width: 100%;
-    margin-bottom: 20px;
-    padding: 0px 5px;
+    /* margin-bottom: 20px; */
+    /* padding: 0px 5px; */
 `;
 
 function InputItem({ title, children }) {

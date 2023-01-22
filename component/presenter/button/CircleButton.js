@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
+import { fonts } from "../../../styles";
 
 const Button = styled.TouchableOpacity`
     background-color: ${(props) => props.color || props.theme.main};
@@ -16,6 +17,7 @@ const ButtonText = styled.Text`
     color: ${(props) => props.textColor || props.theme.lightFontColor};
     font-weight: ${(props) => props.textWeight || 500};
     font-size: ${(props) => props.textSize || 16}px;
+    font-family: ${fonts.subTitle};
 `;
 
 function CircleButton({

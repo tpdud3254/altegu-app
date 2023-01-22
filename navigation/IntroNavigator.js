@@ -20,9 +20,8 @@ export default function IntroNavigator() {
                 component={SignIn}
                 options={{
                     title: "",
-                    headerBackTitleVisible: false,
                     headerShadowVisible: false,
-                    headerTintColor: "black",
+                    // headerShown: false,
                 }}
             />
             <Stack.Screen

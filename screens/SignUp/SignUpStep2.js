@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import FormLayout from "../../component/presenter/layout/FormLayout";
 import { ORDINARY } from "../../constant";
 import Button from "../../component/presenter/button/Button";
-import Title from "../../component/presenter/text/Title";
+import Title from "../../component/presenter/title/Title";
 import { TextInput } from "../../component/presenter/input/TextInput";
 import { useForm } from "react-hook-form";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
-import ItemTitle from "../text/ItemTitle";
+import ItemTitle from "../title/ItemTitle";
 
 const SItem = styled.View`
     width: 100%;
