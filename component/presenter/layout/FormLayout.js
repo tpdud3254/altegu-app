@@ -16,9 +16,10 @@ export default function FormLayout({ children, submitBtnProps }) {
     return (
         <DismissKeyboard>
             <Container>
-                <View>{children}</View>
+                <View style={{ flex: 9 }}>{children}</View>
 
                 <SubmitButton
+                    style={{ flex: 1 }}
                     {...submitBtnProps}
                     // style={{ marginBottom: 50 }}
                 />

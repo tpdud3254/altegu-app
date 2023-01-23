@@ -21,9 +21,14 @@ export default function SignUpNavigator() {
                 headerBackTitleVisible: false,
                 headerShadowVisible: false,
                 headerTintColor: "black",
+                presentation: "modal",
             }}
         >
-            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen
+                name="SignUp"
+                component={SignUp}
+                options={{ title: "알테구 회원가입" }}
+            />
             <Stack.Screen name="SignUpStep1" component={SignUpStep1} />
             <Stack.Screen name="SignUpStep2" component={SignUpStep2} />
             <Stack.Screen name="SignUpStep3" component={SignUpStep3} />

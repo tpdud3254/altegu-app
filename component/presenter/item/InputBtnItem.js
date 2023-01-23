@@ -21,16 +21,13 @@ const Wrapper = styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 60px;
+    padding: 10px;
 `;
 
 const Button = styled.TouchableOpacity``;
 const ButtonText = styled.Text`
     font-size: 18px;
-    color: ${(props) => theme.darkFontColor};
-    font-family: ${fonts.content};
+    color: ${theme.darkFontColor};
 `;
 
 //inputbox내에 button (ex. password)

@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 
 export default function IntroNavigator() {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ presentation: "modal" }}>
             <Stack.Screen
                 name="Intro"
                 component={Intro}

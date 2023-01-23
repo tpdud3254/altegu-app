@@ -16,7 +16,6 @@ const SButton = styled.TouchableOpacity`
 const ButtonText = styled.Text`
     font-size: ${(props) => props.textSize || 18}px;
     color: ${(props) => props.textColor || props.theme.lightFontColor};
-
     font-family: ${fonts.content};
 `;
 
