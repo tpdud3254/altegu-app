@@ -1,8 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import Intro from "../screens/Intro";
-import SignIn from "../screens/SignIn";
-import { theme } from "../styles";
+import SignInNavigator from "./SignInNavigator";
 import SignUpNavigator from "./SignUpNavigator";
 
 const Stack = createStackNavigator();
@@ -16,11 +15,11 @@ export default function IntroNavigator() {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="SignIn"
-                component={SignIn}
+                name="SignInNavigator"
+                component={SignInNavigator}
                 options={{
                     title: "",
-                    headerShadowVisible: false,
+                    headerShown: false,
                     // headerShown: false,
                 }}
             />

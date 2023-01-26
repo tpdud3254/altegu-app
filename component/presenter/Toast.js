@@ -5,10 +5,10 @@ export const toastConfig = {
         <ErrorToast
             {...props}
             text1Style={{
-                fontSize: 20,
+                fontSize: 18,
             }}
             text2Style={{
-                fontSize: 15,
+                fontSize: 13,
             }}
         />
     ),

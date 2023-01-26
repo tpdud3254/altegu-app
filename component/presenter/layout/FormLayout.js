@@ -12,18 +12,10 @@ const Container = styled.View`
     padding: 0px 10px 10px 10px;
 `;
 
-export default function FormLayout({ children, submitBtnProps }) {
+export default function FormLayout({ children }) {
     return (
         <DismissKeyboard>
-            <Container>
-                <View style={{ flex: 9 }}>{children}</View>
-
-                <SubmitButton
-                    style={{ flex: 1 }}
-                    {...submitBtnProps}
-                    // style={{ marginBottom: 50 }}
-                />
-            </Container>
+            <Container>{children}</Container>
         </DismissKeyboard>
     );
 }

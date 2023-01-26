@@ -1,10 +1,8 @@
-import { Image, Text, View } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
-import Entypo from "@expo/vector-icons/Entypo";
+import { View } from "react-native";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
-import Intro from "./screens/Intro";
 import { Asset } from "expo-asset";
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "./styles";
@@ -14,12 +12,18 @@ import MainNavigator from "./navigation/MainNavigator";
 import Toast from "react-native-toast-message";
 import { toastConfig } from "./component/presenter/Toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { RecoilRoot } from "recoil";
+import {
+    IsLoggedInConsumer,
+    IsLoggedInContext,
+    IsLoggedInProvider,
+} from "./context";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
     const [appIsReady, setAppIsReady] = useState(false);
-    let isLoggedIn = false; //TODO: 전역 변수로 바꾸기
+    const { setIsLoggedIn } = useContext(IsLoggedInContext);
 
     const [fontsLoaded] = useFonts({
         MICEGothic: require("./assets/fonts/MICEGothic.ttf"),
@@ -35,11 +39,8 @@ export default function App() {
                 const token = await AsyncStorage.getItem("token");
                 console.log("token : ", token);
                 if (token) {
-                    isLoggedIn = true;
+                    setIsLoggedIn(true);
                 }
-
-                console.log("fontsLoaded : ", fontsLoaded);
-                //TODO: font preload
                 //TODO: image preload
                 // await Font.loadAsync(Entypo.font);
                 // await new Promise.all([...imagePromises]);
@@ -65,16 +66,28 @@ export default function App() {
 
     return (
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-            <ThemeProvider theme={theme}>
-                <NavigationContainer>
-                    {isLoggedIn ? <MainNavigator /> : <IntroNavigator />}
-                </NavigationContainer>
-                <Toast
-                    position="bottom"
-                    bottomOffset="90"
-                    config={toastConfig}
-                />
-            </ThemeProvider>
+            <IsLoggedInProvider>
+                <ThemeProvider theme={theme}>
+                    <RecoilRoot>
+                        <NavigationContainer>
+                            <IsLoggedInConsumer>
+                                {({ isLoggedIn }) =>
+                                    isLoggedIn ? (
+                                        <MainNavigator />
+                                    ) : (
+                                        <IntroNavigator />
+                                    )
+                                }
+                            </IsLoggedInConsumer>
+                        </NavigationContainer>
+                        <Toast
+                            position="bottom"
+                            bottomOffset="90"
+                            config={toastConfig}
+                        />
+                    </RecoilRoot>
+                </ThemeProvider>
+            </IsLoggedInProvider>
         </View>
     );
 }

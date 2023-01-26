@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FlatList, Image, useWindowDimensions, View } from "react-native";
 import styled from "styled-components/native";
 import CircleButton from "../component/presenter/button/CircleButton";
@@ -7,6 +7,7 @@ import VerticalDivider from "../component/presenter/divider/VerticalDivider";
 import { theme } from "../styles";
 import * as Location from "expo-location";
 import Logo from "../component/presenter/Logo";
+import IsLoggedInContext from "../context";
 
 const imagePath = [
     require(`../assets/images/intro/intro_1.jpeg`),
@@ -90,7 +91,7 @@ export default function Intro() {
     };
 
     const goToSignIn = () => {
-        navigation.navigate("SignIn");
+        navigation.navigate("SignInNavigator");
     };
     const goToSignUp = () => {
         navigation.navigate("SignUpNavigator");

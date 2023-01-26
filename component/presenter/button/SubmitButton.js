@@ -19,14 +19,21 @@ const ButtonText = styled.Text`
     font-family: ${fonts.contentBold};
 `;
 
-function SubmitButton({ value, color, textSize, textColor, fn, disabled }) {
+function SubmitButton({
+    value,
+    color,
+    textSize,
+    textColor,
+    onPress,
+    disabled,
+}) {
     return (
         <SButton
             color={color}
             textSize={textSize}
             textColor={textColor}
-            onPress={fn}
             disabled={disabled}
+            onPress={onPress}
         >
             <ButtonText>{value}</ButtonText>
         </SButton>
@@ -38,6 +45,6 @@ SubmitButton.propTypes = {
     color: PropTypes.string,
     textSize: PropTypes.number,
     textColor: PropTypes.string,
-    fn: PropTypes.func.isRequired,
+    fn: PropTypes.func,
 };
 export default SubmitButton;
