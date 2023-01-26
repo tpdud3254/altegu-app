@@ -17,7 +17,8 @@ import {
     IsLoggedInConsumer,
     IsLoggedInContext,
     IsLoggedInProvider,
-} from "./context";
+} from "./Context/IsLoggedInContext";
+import { UserProvider } from "./Context/UserContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -67,26 +68,28 @@ export default function App() {
     return (
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
             <IsLoggedInProvider>
-                <ThemeProvider theme={theme}>
-                    <RecoilRoot>
-                        <NavigationContainer>
-                            <IsLoggedInConsumer>
-                                {({ isLoggedIn }) =>
-                                    isLoggedIn ? (
-                                        <MainNavigator />
-                                    ) : (
-                                        <IntroNavigator />
-                                    )
-                                }
-                            </IsLoggedInConsumer>
-                        </NavigationContainer>
-                        <Toast
-                            position="bottom"
-                            bottomOffset="90"
-                            config={toastConfig}
-                        />
-                    </RecoilRoot>
-                </ThemeProvider>
+                <UserProvider>
+                    <ThemeProvider theme={theme}>
+                        <RecoilRoot>
+                            <NavigationContainer>
+                                <IsLoggedInConsumer>
+                                    {({ isLoggedIn }) =>
+                                        isLoggedIn ? (
+                                            <MainNavigator />
+                                        ) : (
+                                            <IntroNavigator />
+                                        )
+                                    }
+                                </IsLoggedInConsumer>
+                            </NavigationContainer>
+                            <Toast
+                                position="bottom"
+                                bottomOffset="90"
+                                config={toastConfig}
+                            />
+                        </RecoilRoot>
+                    </ThemeProvider>
+                </UserProvider>
             </IsLoggedInProvider>
         </View>
     );

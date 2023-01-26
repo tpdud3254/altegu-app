@@ -7,7 +7,6 @@ import VerticalDivider from "../component/presenter/divider/VerticalDivider";
 import { theme } from "../styles";
 import * as Location from "expo-location";
 import Logo from "../component/presenter/Logo";
-import IsLoggedInContext from "../context";
 
 const imagePath = [
     require(`../assets/images/intro/intro_1.jpeg`),

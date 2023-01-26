@@ -13,10 +13,11 @@ import { useForm } from "react-hook-form";
 import SubmitButton from "../component/presenter/button/SubmitButton";
 import axios from "axios";
 import { SERVER } from "../server";
-import { IsLoggedInContext } from "../context";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
+import IsLoggedInContext from "../Context/IsLoggedInContext";
+import UserContext from "../Context/UserContext";
 
 const TitleContainter = styled.View`
     margin-bottom: 30px;
@@ -32,6 +33,7 @@ function SignIn() {
     const { register, handleSubmit, setValue, watch } = useForm();
     const navigation = useNavigation();
     const { setIsLoggedIn } = useContext(IsLoggedInContext);
+    const { info, setInfo } = useContext(UserContext);
 
     const passwordRef = useRef();
 
@@ -67,8 +69,9 @@ function SignIn() {
             withCredentials: true,
             data: { phone, password },
         }).then(async ({ data }) => {
-            const { result, token, msg } = data;
+            const { result, token, msg, user } = data;
             if (result) {
+                setInfo(user);
                 await AsyncStorage.setItem("token", token);
                 setIsLoggedIn(true);
             } else {

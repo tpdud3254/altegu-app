@@ -4,10 +4,14 @@ import PropTypes from "prop-types";
 import { Button, Text, View } from "react-native";
 import DefaultLayout from "../component/presenter/layout/DefaultLayout";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import IsLoggedInContext from "../context";
+import IsLoggedInContext from "../Context/IsLoggedInContext";
+import UserContext from "../Context/UserContext";
 
 function Home() {
     const { setIsLoggedIn } = useContext(IsLoggedInContext);
+    const { info, setInfo } = useContext(UserContext);
+
+    console.log("user info : ", info);
     return (
         <DefaultLayout>
             <Text>Home</Text>
