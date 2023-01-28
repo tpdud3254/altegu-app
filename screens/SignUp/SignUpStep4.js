@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import SubmitLayout from "../../component/presenter/layout/SubmitLayout";
 import Title from "../../component/presenter/title/Title";
 import Checkbox from "expo-checkbox";
-import { theme } from "../../styles";
+import { fonts, theme } from "../../styles";
 import * as Location from "expo-location";
 import axios from "axios";
 import SignUpContext from "../../Context/SIgnUpContext";
@@ -24,35 +24,34 @@ const Container = styled.View`
 `;
 
 const Wrapper = styled.View`
-    padding: 0px 25px 0px 25px;
+    padding: 10px 10px 0px 10px;
 `;
 
 const Terms = styled.View`
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 35px;
     align-items: center;
 `;
 
 const TermsButton = styled.TouchableOpacity``;
 
 const TermsText = styled.Text`
-    font-size: ${(props) => (props.bold ? 27 : 25)}px;
+    font-family: ${(props) => (props.bold ? fonts.contentBold : fonts.content)};
+    font-size: ${(props) => (props.bold ? 23 : 19)}px;
     color: ${(props) => (props.bold ? "black" : props.theme.darkFontColor)};
-    font-weight: ${(props) => (props.bold ? "600" : "400")};
     text-decoration-line: ${(props) =>
         props.underline ? "underline" : "none"};
 `;
 
 const GuideText = styled.Text`
-    font-weight: 600;
     font-size: 18px;
     color: ${theme.darkFontColor};
-    bottom: 0;
+    bottom: 10px;
     position: absolute;
+    font-family: ${fonts.subTitle};
 `;
 
-function SignUpStep4({ route }) {
+function SignUpStep4() {
     const [checkArr, setCheckArr] = useState([
         false,
         false,
@@ -118,10 +117,10 @@ function SignUpStep4({ route }) {
     };
 
     const onNextStep = async () => {
-        navigation.navigate("SignUpStep5", {
-            memberType: route?.params?.memberType,
-        });
+        navigation.navigate("SignUpStep5");
 
+        //TODO: 빙글빙글 돌아가는 모양넣ㄱ시
+        //TODO:자동로그인
         // const {
         //     coords: { latitude, longitude },
         // } = await Location.getCurrentPositionAsync({
@@ -139,7 +138,7 @@ function SignUpStep4({ route }) {
 
         // // const workCategory=1 //TODO:업종
         // const sendingData = {
-        //     sms: true,
+        //     sms: true, //TODO:안내 동의
         //     accessedRegion,
         //     ...route?.params?.data,
         // };
@@ -170,7 +169,7 @@ function SignUpStep4({ route }) {
         <SubmitLayout
             submitBtnProps={{
                 value: "동의하기",
-                fn: onNextStep,
+                onPress: onNextStep,
                 disabled: isAgree,
             }}
         >
@@ -180,16 +179,24 @@ function SignUpStep4({ route }) {
                     <Terms>
                         <TermsText bold>전체 동의합니다.</TermsText>
                         <Checkbox
-                            style={{ width: 40, height: 40 }}
+                            style={{ width: 36, height: 36 }}
                             value={isAllChecked}
                             onValueChange={clickAllCheckButton}
-                            color={isAllChecked ? theme.main : undefined}
+                            color={
+                                isAllChecked ? theme.btnPointColor : undefined
+                            }
                         />
                     </Terms>
                     {termsTexts.map((text, index) => (
                         <Terms key={index}>
                             <TermsButton onPress={() => ShowDetailTerms(index)}>
-                                <TermsText underline>
+                                <TermsText
+                                    underline={
+                                        index === 0 || index === 4
+                                            ? false
+                                            : true
+                                    }
+                                >
                                     {text}
                                     {index < 4 ? " (필수)" : ""}
                                 </TermsText>
@@ -200,13 +207,17 @@ function SignUpStep4({ route }) {
                                 onValueChange={(value) => {
                                     clickCheckButton(value, index);
                                 }}
-                                color={checkArr[index] ? theme.main : undefined}
+                                color={
+                                    checkArr[index]
+                                        ? theme.btnPointColor
+                                        : undefined
+                                }
                             />
                         </Terms>
                     ))}
                 </Wrapper>
                 <GuideText>
-                    각 항목 클릭 시 상세 내용을 보실 수 있습니다
+                    각 항목 클릭 시 상세 내용을 보실 수 있습니다.
                 </GuideText>
             </Container>
         </SubmitLayout>

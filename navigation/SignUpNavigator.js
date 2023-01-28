@@ -33,7 +33,13 @@ export default function SignUpNavigator() {
             <Stack.Screen name="SignUpStep2" component={SignUpStep2} />
             <Stack.Screen name="SignUpStep3" component={SignUpStep3} />
             <Stack.Screen name="SignUpStep4" component={SignUpStep4} />
-            <Stack.Screen name="SignUpStep5" component={SignUpStep5} />
+            <Stack.Screen
+                name="SignUpStep5"
+                component={SignUpStep5}
+                options={{
+                    headerShown: false,
+                }}
+            />
             <Stack.Screen
                 name="TakePhoto"
                 component={TakePhoto}

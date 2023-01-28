@@ -21,7 +21,7 @@ function Logo() {
                 style={{
                     resizeMode: "contain",
                 }}
-                source={require(`../../assets/images/logo/text-logo.png`)}
+                source={require(`../../../assets/images/logo/text-logo.png`)}
             />
         </Background>
     );

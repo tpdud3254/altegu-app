@@ -6,7 +6,7 @@ import CircleButton from "../component/presenter/button/CircleButton";
 import VerticalDivider from "../component/presenter/divider/VerticalDivider";
 import { theme } from "../styles";
 import * as Location from "expo-location";
-import Logo from "../component/presenter/Logo";
+import Logo from "../component/presenter/logo/Logo";
 
 const imagePath = [
     require(`../assets/images/intro/intro_1.jpeg`),
@@ -62,6 +62,7 @@ const bottomButtonProps = {
     color: "white",
 };
 
+//TODO: 로그인 전 프로세스들 안쓰는거 삭제, 테스트 코드 삭제, 로그 삭제
 export default function Intro() {
     const { width: imageSize } = useWindowDimensions();
     const navigation = useNavigation();
