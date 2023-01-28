@@ -34,7 +34,7 @@ function SignUpStep2() {
 
     const onValid = () => {
         //TODO: Test code
-        const data = {
+        const testData = {
             userName: "박승아",
             gender: "남",
             birth: "991015",
@@ -43,7 +43,7 @@ function SignUpStep2() {
 
         //TODO:존재하는 핸드폰 번호 인지 체크
         axios({
-            url: SERVER + `/users/check?phone=${data.phone}`,
+            url: SERVER + `/users/check?phone=${testData.phone}`,
             method: "GET",
             header: {
                 Accept: "application/json",
@@ -55,7 +55,7 @@ function SignUpStep2() {
                 const { result } = data;
 
                 if (!result) {
-                    onNextStep(data);
+                    onNextStep(testData);
                 } else {
                     Toast.show({
                         type: "error",
