@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import DefaultLayout from "../../component/presenter/layout/DefaultLayout";
 
 import { fonts, theme } from "../../styles";
 import { ORDINARY, SPECIAL } from "../../constant";
+import SignUpContext from "../../Context/SIgnUpContext";
 
 const Container = styled.View`
     justify-content: space-evenly;
@@ -30,11 +31,11 @@ const ContentText = styled.Text`
 
 function SignUp() {
     const navigation = useNavigation();
+    const { setInfo } = useContext(SignUpContext);
 
     const onPress = (data) => {
-        navigation.navigate("SignUpStep1", {
-            memberType: data,
-        });
+        setInfo({ userType: data });
+        navigation.navigate("SignUpStep1");
     };
     return (
         <DefaultLayout>

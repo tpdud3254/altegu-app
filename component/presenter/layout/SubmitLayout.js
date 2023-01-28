@@ -8,7 +8,7 @@ const Container = styled.View`
     flex: 1;
     justify-content: space-between;
     background-color: ${(props) => props.theme.backgroundColor};
-    padding: 20px 10px;
+    padding: 0px 10px 10px 10px;
 `;
 
 export default function SubmitLayout({ children, submitBtnProps }) {

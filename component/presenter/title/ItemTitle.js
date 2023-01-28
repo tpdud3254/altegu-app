@@ -3,14 +3,21 @@ import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { fonts } from "../../../styles";
 import ContentBoldText from "../text/ContentBoldText";
+import ContentText from "../text/ContentText";
+import SubTitleText from "../text/SubTitleText";
 
 function ItemTitle({ title, size, color }) {
     return (
-        <ContentBoldText
-            style={{ fontSize: size || 23, color: color, marginBottom: -15 }}
+        <SubTitleText
+            style={{
+                fontSize: size || 22,
+                color: color,
+                marginTop: 20,
+                marginBottom: 7,
+            }}
         >
             {title}
-        </ContentBoldText>
+        </SubTitleText>
     );
 }
 

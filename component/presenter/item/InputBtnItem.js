@@ -2,21 +2,15 @@ import React from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { fonts, theme } from "../../../styles";
+import ItemTitle from "../title/ItemTitle";
 
 const InputContainer = styled.View`
     width: 100%;
 `;
 
-const InputText = styled.Text`
-    width: 100%;
-    margin-bottom: -15px;
-    font-size: 23px;
-    font-family: ${fonts.contentBold};
-`;
-
 const Wrapper = styled.View`
     /* border: 2px solid ${(props) => props.theme.sub.yellow + "aa"}; */
-    border: 2px solid ${theme.textBoxColor};
+    border: 1px solid ${theme.textBoxColor};
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
@@ -34,7 +28,7 @@ const ButtonText = styled.Text`
 function InputBtnItem({ title, btnTitle, fn, children }) {
     return (
         <InputContainer>
-            <InputText>{title}</InputText>
+            <ItemTitle title={title} />
             <Wrapper>
                 {children}
                 <Button onPress={fn}>

@@ -19,6 +19,7 @@ import {
     IsLoggedInProvider,
 } from "./Context/IsLoggedInContext";
 import { UserProvider } from "./Context/UserContext";
+import { SignUpProvider } from "./Context/SIgnUpContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -77,7 +78,9 @@ export default function App() {
                                         isLoggedIn ? (
                                             <MainNavigator />
                                         ) : (
-                                            <IntroNavigator />
+                                            <SignUpProvider>
+                                                <IntroNavigator />
+                                            </SignUpProvider>
                                         )
                                     }
                                 </IsLoggedInConsumer>

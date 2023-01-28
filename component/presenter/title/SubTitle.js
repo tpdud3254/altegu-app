@@ -11,7 +11,9 @@ const Container = styled.View`
 function SubTitle({ value, color, size }) {
     return (
         <Container>
-            <SubTitleText style={{ color: color, fontSize: size || 23 }}>
+            <SubTitleText
+                style={{ color: color || "#777777", fontSize: size || 23 }}
+            >
                 {value}
             </SubTitleText>
         </Container>

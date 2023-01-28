@@ -97,7 +97,7 @@ function SetPassword() {
 
     return (
         <DefaultLayout>
-            <Title value="비밀번호 재설정" color="#555555" />
+            <Title value="비밀번호 재설정" />
             {pass ? (
                 <PasswordContainer>
                     <View>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { Text, View } from "react-native";
@@ -7,6 +7,7 @@ import SubmitLayout from "../../component/presenter/layout/SubmitLayout";
 import Title from "../../component/presenter/title/Title";
 import Button from "../../component/presenter/button/Button";
 import { theme } from "../../styles";
+import SignUpContext from "../../Context/SIgnUpContext";
 
 const MapContainer = styled.View`
     min-height: 300px;
@@ -36,7 +37,9 @@ const GuideText = styled.Text`
 function SignUpStep3({ route }) {
     const navigation = useNavigation();
 
-    console.log("member type : ", route?.params);
+    const { info, setInfo } = useContext(SignUpContext);
+
+    console.log("step 3 info : ", info);
 
     const onNextStep = () => {
         const data = { workRegion: [1, 2] };
@@ -49,7 +52,7 @@ function SignUpStep3({ route }) {
     };
     return (
         <SubmitLayout submitBtnProps={{ value: "다음으로", fn: onNextStep }}>
-            <Title value="작업지역 선택하기" color="#555555" />
+            <Title value="작업지역 선택하기" />
             <MapContainer>
                 <Map>
                     <Text>지도</Text>
@@ -62,12 +65,14 @@ function SignUpStep3({ route }) {
                         color={theme.sub.yellow}
                         textSize={23}
                         width="47%"
+                        fn={() => {}}
                     />
                     <Button
                         value="인천시"
                         color={theme.sub.yellow}
                         textSize={23}
                         width="47%"
+                        fn={() => {}}
                     />
                 </ButtonRow>
                 <ButtonRow>
@@ -76,12 +81,14 @@ function SignUpStep3({ route }) {
                         color={theme.sub.yellow}
                         textSize={23}
                         width="47%"
+                        fn={() => {}}
                     />
                     <Button
                         value="경기 북동부"
                         color={theme.sub.yellow}
                         textSize={23}
                         width="47%"
+                        fn={() => {}}
                     />
                 </ButtonRow>
                 <ButtonRow>
@@ -90,12 +97,14 @@ function SignUpStep3({ route }) {
                         color={theme.sub.yellow}
                         textSize={23}
                         width="47%"
+                        fn={() => {}}
                     />
                     <Button
                         value="경기 남동부"
                         color={theme.sub.yellow}
                         textSize={23}
                         width="47%"
+                        fn={() => {}}
                     />
                 </ButtonRow>
             </ButtonContainer>

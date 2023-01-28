@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { Text, View } from "react-native";
@@ -9,6 +9,7 @@ import Checkbox from "expo-checkbox";
 import { theme } from "../../styles";
 import * as Location from "expo-location";
 import axios from "axios";
+import SignUpContext from "../../Context/SIgnUpContext";
 
 const termsTexts = [
     "만 14세 이상입니다.",
@@ -63,8 +64,9 @@ function SignUpStep4({ route }) {
     const [blockAllChecked, setBlockAllChecked] = useState(false);
     const [isAgree, setIsAgree] = useState(true);
     const navigation = useNavigation();
+    const { info, setInfo } = useContext(SignUpContext);
 
-    console.log("params", route?.params);
+    console.log("step 4 info : ", info);
 
     const clickAllCheckButton = (value) => {
         if (value) {

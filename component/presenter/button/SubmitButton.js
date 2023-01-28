@@ -16,7 +16,7 @@ const SButton = styled.TouchableOpacity`
 const ButtonText = styled.Text`
     font-size: ${(props) => props.textSize || 20}px;
     color: ${(props) => props.textColor || props.theme.lightFontColor};
-    font-family: ${fonts.contentBold};
+    font-family: ${fonts.content};
 `;
 
 function SubmitButton({

@@ -87,8 +87,8 @@ function SignIn() {
         <FormLayout>
             <Container>
                 <TitleContainter>
-                    <Title value="로그인" color="#555555" />
-                    <SubTitle value="안녕하세요. 환영합니다." color="#777777" />
+                    <Title value="로그인" />
+                    <SubTitle value="안녕하세요. 환영합니다." />
                 </TitleContainter>
                 <InputContainer>
                     <InputItem title="휴대폰번호">

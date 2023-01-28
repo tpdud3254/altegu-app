@@ -9,7 +9,7 @@ export const theme = {
     darkFontColor: "#555555",
     lightFontColor: "white",
     backgroundColor: "white",
-    textBoxColor: "#00000033",
+    textBoxColor: "#00000055",
     btnPointColor: "#f5904c",
     btnColor: "#bbbbbb",
 };

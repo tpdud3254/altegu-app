@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { Text, View } from "react-native";
@@ -9,85 +9,76 @@ import Button from "../../component/presenter/button/Button";
 import Title from "../../component/presenter/title/Title";
 import { TextInput } from "../../component/presenter/input/TextInput";
 import { useForm } from "react-hook-form";
+import SignUpContext from "../../Context/SIgnUpContext";
+import SubmitButton from "../../component/presenter/button/SubmitButton";
+import axios from "axios";
+import { SERVER } from "../../server";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
-function SignUpStep2({ route }) {
-    const { register, handleSubmit, setValue, getValues, watch } = useForm(); //TODO:test code
+function SignUpStep2() {
+    const { info, setInfo } = useContext(SignUpContext);
+
+    console.log(info);
     const navigation = useNavigation();
-
-    const genderRef = useRef();
-    const birthRef = useRef();
-    const phoneRef = useRef(); //TODO:test code
-
-    useEffect(() => {
-        //TODO:test code
-        //TODO:존재하는 핸드폰 번호 인지 체크
-        register("userName");
-        register("gender");
-        register("birth");
-        register("phone");
-
-        setValue("userName", "고세영");
-        setValue("gender", "여");
-        setValue("birth", "950124");
-        setValue("phone", "01032655452");
-    }, [register]);
-
-    console.log("member type : ", route?.params);
 
     //TODO:기능 추가 및 UI 구현
     const onNextStep = (data) => {
-        console.log(data);
-        const obj = {
-            memberType: route?.params?.memberType,
-            data,
-        };
+        setInfo({ ...data, ...info });
 
-        console.log(obj);
-        if (route?.params?.memberType === ORDINARY) {
-            navigation.navigate("SignUpStep4", obj);
+        if (info.userType === ORDINARY) {
+            navigation.navigate("SignUpStep4");
         } else {
-            navigation.navigate("SignUpStep3", obj);
+            navigation.navigate("SignUpStep3");
         }
     };
 
-    const onValid = (data) => {
-        const newData = { ...route?.params?.data, ...data }; //TODO: test code
-        onNextStep(newData);
+    const onValid = () => {
+        //TODO: Test code
+        const data = {
+            userName: "박승아",
+            gender: "남",
+            birth: "991015",
+            phone: "01011112222",
+        };
+
+        //TODO:존재하는 핸드폰 번호 인지 체크
+        axios({
+            url: SERVER + `/users/check?phone=${data.phone}`,
+            method: "GET",
+            header: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=UTP-8",
+            },
+            withCredentials: true,
+        })
+            .then(async ({ data }) => {
+                const { result } = data;
+
+                if (!result) {
+                    onNextStep(data);
+                } else {
+                    Toast.show({
+                        type: "error",
+                        text1: "존재하는 사용자입니다.",
+                    });
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            })
+            .then(() => {});
     };
 
+    const clickAuth = () => {};
+
     return (
-        <FormLayout
-            submitBtnProps={{ value: "다음으로", fn: handleSubmit(onValid) }}
-        >
-            <Title value="휴대폰 인증 받기" color="#555555" />
-            <Button value="휴대폰 인증" fn={onNextStep} />
-            <Text>------test code---------</Text>
-            <TextInput
-                placeholder="성명"
-                returnKeyType="next"
-                onSubmitEditing={() => onNext(genderRef)}
-                onChangeText={(text) => setValue("userName", "고세영")}
-            />
-            <TextInput
-                ref={genderRef}
-                placeholder="성별"
-                returnKeyType="next"
-                onSubmitEditing={() => onNext(birthRef)}
-                onChangeText={(text) => setValue("gender", "여")}
-            />
-            <TextInput
-                ref={birthRef}
-                placeholder="생년월일"
-                returnKeyType="next"
-                onSubmitEditing={() => onNext(phoneRef)}
-                onChangeText={(text) => setValue("birth", "950124")}
-            />
-            <TextInput
-                ref={phoneRef}
-                placeholder="휴대폰번호"
-                returnKeyType="next"
-                // onSubmitEditing={() => onNext(passwordRef)}
-                onChangeText={(text) => setValue("phone", "01090665452")}
+        <FormLayout>
+            <Title value="본인 인증" />
+            <Button value="휴대폰 인증" fn={clickAuth} />
+            <SubmitButton
+                value="다음으로"
+                onPress={onValid}
+                // disabled={!(watch("name") && watch("password"))} TODO:인증완료 안되면 true
             />
         </FormLayout>
     );
