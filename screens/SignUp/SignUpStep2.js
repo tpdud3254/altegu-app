@@ -35,10 +35,10 @@ function SignUpStep2() {
     const onValid = () => {
         //TODO: Test code
         const testData = {
-            userName: "박승아",
+            userName: "고응주",
             gender: "남",
-            birth: "991015",
-            phone: "01011112222",
+            birth: "580820",
+            phone: "01054925452",
         };
 
         //TODO:존재하는 핸드폰 번호 인지 체크

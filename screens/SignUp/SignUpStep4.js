@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components/native";
 import PropTypes from "prop-types";
-import { Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SubmitLayout from "../../component/presenter/layout/SubmitLayout";
 import Title from "../../component/presenter/title/Title";
@@ -10,6 +9,8 @@ import { fonts, theme } from "../../styles";
 import * as Location from "expo-location";
 import axios from "axios";
 import SignUpContext from "../../Context/SIgnUpContext";
+import Loading from "../../component/presenter/Loading";
+import { SERVER } from "../../server";
 
 const termsTexts = [
     "만 14세 이상입니다.",
@@ -63,6 +64,7 @@ function SignUpStep4() {
     const [blockAllChecked, setBlockAllChecked] = useState(false);
     const [isAgree, setIsAgree] = useState(true);
     const navigation = useNavigation();
+    const [loading, setLoading] = useState(false);
     const { info, setInfo } = useContext(SignUpContext);
 
     console.log("step 4 info : ", info);
@@ -117,46 +119,85 @@ function SignUpStep4() {
     };
 
     const onNextStep = async () => {
-        navigation.navigate("SignUpStep5");
+        setLoading(true);
 
-        //TODO: 빙글빙글 돌아가는 모양넣ㄱ시
-        //TODO:자동로그인
-        // const {
-        //     coords: { latitude, longitude },
-        // } = await Location.getCurrentPositionAsync({
-        //     accuracy: 5,
-        // });
+        const {
+            coords: { latitude, longitude },
+        } = await Location.getCurrentPositionAsync({
+            accuracy: 5,
+        });
 
-        // const location = await Location.reverseGeocodeAsync(
-        //     { latitude, longitude },
-        //     { useGoogleMaps: false }
-        // );
+        const location = await Location.reverseGeocodeAsync(
+            { latitude, longitude },
+            { useGoogleMaps: false }
+        );
 
-        // const accessedRegion = `${location[0].city}>${
-        //     location[0].subregion ? location[0].subregion : location[0].district
-        // }`;
+        const accessedRegion = `${
+            location[0].city ? location[0].city : location[0].region
+        }>${
+            location[0].subregion ? location[0].subregion : location[0].district
+        }`;
 
-        // // const workCategory=1 //TODO:업종
-        // const sendingData = {
-        //     sms: true, //TODO:안내 동의
-        //     accessedRegion,
-        //     ...route?.params?.data,
-        // };
+        const workCategory = [1];
+        const sendingData = {
+            workCategory,
+            sms: checkArr[4],
+            accessedRegion,
+        };
 
-        // console.log(sendingData);
+        setInfo({ ...sendingData, ...info, license: info.licenseUrl });
 
-        // axios({
-        //     url: "https://d367-112-171-113-108.jp.ngrok.io/users/signup",
-        //     method: "POST",
-        //     header: {
-        //         Accept: "application/json",
-        //         "Content-Type": "application/json;charset=UTP-8",
-        //     },
-        //     withCredentials: true,
-        //     data: sendingData,
-        // }).then(({ data }) => {
-        //     console.log(data);
-        // });
+        axios({
+            url: SERVER + `/users/sign-up`,
+            method: "POST",
+            header: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=UTP-8",
+            },
+            withCredentials: true,
+            data: { license: info.licenseUrl, ...sendingData, ...info },
+        })
+            .then(async ({ data }) => {
+                const { result, userData } = data;
+
+                if (result) {
+                    console.log("userData : ", userData);
+                    // saveLicense(info.licenseUrl, userData.id); //TODO:file 저장
+                    setLoading(false);
+                    navigation.navigate("SignUpStep5");
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            })
+            .then(() => {});
+    };
+
+    const saveLicense = async (url, userId) => {
+        const formData = new FormData();
+
+        const file = {
+            uri: url,
+            type: "image/jpeg",
+            name: () => {
+                const uriArr = url.split("/");
+
+                return uriArr[uriArr.length - 1];
+            },
+        };
+
+        formData.append("file", file);
+        formData.append("userId", userId);
+
+        const response = await axios.post(SERVER + `/users/license`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Accept: "application/json",
+            },
+            transformRequest: (data, headers) => {
+                return data;
+            },
+        });
     };
 
     const ShowDetailTerms = (index) => {
@@ -166,61 +207,68 @@ function SignUpStep4() {
         });
     };
     return (
-        <SubmitLayout
-            submitBtnProps={{
-                value: "동의하기",
-                onPress: onNextStep,
-                disabled: isAgree,
-            }}
-        >
-            <Container>
-                <Title value="약관동의" color="#555555" />
-                <Wrapper>
-                    <Terms>
-                        <TermsText bold>전체 동의합니다.</TermsText>
-                        <Checkbox
-                            style={{ width: 36, height: 36 }}
-                            value={isAllChecked}
-                            onValueChange={clickAllCheckButton}
-                            color={
-                                isAllChecked ? theme.btnPointColor : undefined
-                            }
-                        />
-                    </Terms>
-                    {termsTexts.map((text, index) => (
-                        <Terms key={index}>
-                            <TermsButton onPress={() => ShowDetailTerms(index)}>
-                                <TermsText
-                                    underline={
-                                        index === 0 || index === 4
-                                            ? false
-                                            : true
-                                    }
-                                >
-                                    {text}
-                                    {index < 4 ? " (필수)" : ""}
-                                </TermsText>
-                            </TermsButton>
+        <>
+            {loading ? <Loading /> : null}
+            <SubmitLayout
+                submitBtnProps={{
+                    value: "동의하기",
+                    onPress: onNextStep,
+                    disabled: isAgree,
+                }}
+            >
+                <Container>
+                    <Title value="약관동의" color="#555555" />
+                    <Wrapper>
+                        <Terms>
+                            <TermsText bold>전체 동의합니다.</TermsText>
                             <Checkbox
-                                style={{ width: 30, height: 30 }}
-                                value={checkArr[index]}
-                                onValueChange={(value) => {
-                                    clickCheckButton(value, index);
-                                }}
+                                style={{ width: 36, height: 36 }}
+                                value={isAllChecked}
+                                onValueChange={clickAllCheckButton}
                                 color={
-                                    checkArr[index]
+                                    isAllChecked
                                         ? theme.btnPointColor
                                         : undefined
                                 }
                             />
                         </Terms>
-                    ))}
-                </Wrapper>
-                <GuideText>
-                    각 항목 클릭 시 상세 내용을 보실 수 있습니다.
-                </GuideText>
-            </Container>
-        </SubmitLayout>
+                        {termsTexts.map((text, index) => (
+                            <Terms key={index}>
+                                <TermsButton
+                                    onPress={() => ShowDetailTerms(index)}
+                                >
+                                    <TermsText
+                                        underline={
+                                            index === 0 || index === 4
+                                                ? false
+                                                : true
+                                        }
+                                    >
+                                        {text}
+                                        {index < 4 ? " (필수)" : ""}
+                                    </TermsText>
+                                </TermsButton>
+                                <Checkbox
+                                    style={{ width: 30, height: 30 }}
+                                    value={checkArr[index]}
+                                    onValueChange={(value) => {
+                                        clickCheckButton(value, index);
+                                    }}
+                                    color={
+                                        checkArr[index]
+                                            ? theme.btnPointColor
+                                            : undefined
+                                    }
+                                />
+                            </Terms>
+                        ))}
+                    </Wrapper>
+                    <GuideText>
+                        각 항목 클릭 시 상세 내용을 보실 수 있습니다.
+                    </GuideText>
+                </Container>
+            </SubmitLayout>
+        </>
     );
 }
 

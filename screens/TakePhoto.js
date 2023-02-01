@@ -100,12 +100,10 @@ function TakePhoto({ navigation, route }) {
     const onDismiss = () => setTakenPhoto("");
 
     const onUpload = () => {
-        const newData = { license: takenPhoto };
+        const newData = { licenseUrl: takenPhoto };
         setInfo({ ...newData, ...info });
 
-        navigation.navigate("SignUpStep1", {
-            file: takenPhoto,
-        });
+        navigation.navigate("SignUpStep1");
     };
 
     const isFocusd = useIsFocused();

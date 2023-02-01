@@ -193,7 +193,7 @@ function SpecialSignUp({ route }) {
             return;
         }
 
-        if (!info.license || info.license === "") {
+        if (!info.licenseUrl || info.licenseUrl === "") {
             Toast.show({
                 type: "error",
                 text1: "사업자 등록증을 등록해주세요.",
@@ -345,9 +345,9 @@ function SpecialSignUp({ route }) {
                                     <LicenseText numberOfLines={1}>
                                         <SignUpConsumer>
                                             {(data) => {
-                                                if (data?.info?.license) {
+                                                if (data?.info?.licenseUrl) {
                                                     const uri =
-                                                        data.info.license;
+                                                        data.info.licenseUrl;
 
                                                     const uriArr =
                                                         uri.split("/");

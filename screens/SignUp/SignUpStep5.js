@@ -13,6 +13,12 @@ import SubTitleText from "../../component/presenter/text/SubTitleText";
 import TitleText from "../../component/presenter/text/TitleText";
 import ContentText from "../../component/presenter/text/ContentText";
 import HorizontalDivider from "../../component/presenter/divider/HorizontalDivider";
+import { BackHandler } from "react-native";
+import { SERVER } from "../../server";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import IsLoggedInContext from "../../Context/IsLoggedInContext";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 
 const Container = styled.View`
     flex: 1;
@@ -22,7 +28,7 @@ const Header = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 30px 0px 0px 0px;
+    padding: 5px 0px 5px 0px;
 `;
 const HeaderButton = styled.TouchableOpacity``;
 
@@ -42,21 +48,50 @@ const ButtonContainer = styled.View`
 `;
 const Button = styled.TouchableOpacity``;
 
-function SignUpStep5({ navigation }) {
+function SignUpStep5() {
     const { info, setInfo } = useContext(SignUpContext);
+    const { setIsLoggedIn } = useContext(IsLoggedInContext);
 
     console.log("step 5 info : ", info);
 
     useEffect(() => {
-        navigation.setOptions({});
+        BackHandler.addEventListener("hardwareBackPress", onNextStep);
     });
 
     const onNextStep = () => {
-        console.log("done");
-        //TODOS:로그인 설정 (로그인 후 로그인 변수 true)
-        // navigation.navigate("Home");
+        signIn();
+        return true;
     };
-    //TODO:back누르면 홈으로
+
+    const signIn = () => {
+        const { phone, password } = info;
+
+        console.log(phone);
+        console.log(password);
+        axios({
+            url: SERVER + "/users/sign-in",
+            method: "POST",
+            header: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=UTP-8",
+            },
+            withCredentials: true,
+            data: { phone, password },
+        }).then(async ({ data }) => {
+            const { result, token, msg, user } = data;
+            if (result) {
+                console.log(user);
+                setInfo(user);
+                await AsyncStorage.setItem("token", token);
+                setIsLoggedIn(true);
+            } else {
+                Toast.show({
+                    type: "error",
+                    text1: msg,
+                });
+            }
+        });
+    };
     return (
         <DefaultLayout>
             <Container>
@@ -69,7 +104,7 @@ function SignUpStep5({ navigation }) {
                     <TitleText style={{ fontSize: 23 }}>
                         회원가입 완료
                     </TitleText>
-                    <HeaderButton>
+                    <HeaderButton onPress={onNextStep}>
                         <Ionicons
                             name={"close-outline"}
                             size={45}
@@ -121,12 +156,14 @@ function SignUpStep5({ navigation }) {
                 <HorizontalDivider color={"#dedede"} />
                 <ButtonContainer>
                     <Button>
+                        {/* TODO: 기능추가 */}
                         <SubTitleText style={{ fontSize: 20 }}>
                             작업등록 하기
                         </SubTitleText>
                     </Button>
                     <VerticalDivider color={theme.textBoxColor} />
                     <Button>
+                        {/* TODO: 기능추가 */}
                         <SubTitleText style={{ fontSize: 20 }}>
                             {info.userType === ORDINARY
                                 ? "가입정보 보기"
