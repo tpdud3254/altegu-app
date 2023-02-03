@@ -19,6 +19,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import IsLoggedInContext from "../../Context/IsLoggedInContext";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { setLogin } from "../../utils";
 
 const Container = styled.View`
     flex: 1;
@@ -80,9 +81,10 @@ function SignUpStep5() {
         }).then(async ({ data }) => {
             const { result, token, msg, user } = data;
             if (result) {
-                console.log(user);
+                // setLogin(token, user.id, user);
                 setInfo(user);
                 await AsyncStorage.setItem("token", token);
+                await AsyncStorage.setItem("userId", user.id + "");
                 setIsLoggedIn(true);
             } else {
                 Toast.show({

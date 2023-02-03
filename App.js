@@ -18,14 +18,17 @@ import {
     IsLoggedInContext,
     IsLoggedInProvider,
 } from "./Context/IsLoggedInContext";
-import { UserProvider } from "./Context/UserContext";
+import UserContext, { UserProvider } from "./Context/UserContext";
 import { SignUpProvider } from "./Context/SIgnUpContext";
+import axios from "axios";
+import { SERVER } from "./server";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
     const [appIsReady, setAppIsReady] = useState(false);
-    const { setIsLoggedIn } = useContext(IsLoggedInContext);
+    const { isLoggedIn, setIsLoggedIn } = useContext(IsLoggedInContext);
+    const { setInfo } = useContext(UserContext);
 
     const [fontsLoaded] = useFonts({
         MICEGothic: require("./assets/fonts/MICEGothic.ttf"),
@@ -39,10 +42,35 @@ export default function App() {
             try {
                 //TODO: token preload
                 const token = await AsyncStorage.getItem("token");
+                const userId = parseInt(await AsyncStorage.getItem("userId"));
                 console.log("token : ", token);
-                if (token) {
-                    setIsLoggedIn(true);
+                console.log("userId : ", userId);
+                if (userId) {
+                    axios({
+                        url: SERVER + `/users/user?id=${userId}`,
+                        method: "GET",
+                        header: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json;charset=UTP-8",
+                        },
+                        withCredentials: true,
+                    }).then(async ({ data }) => {
+                        const { result, userInfo } = data;
+                        console.log("userInfo : ", userInfo);
+                        if (result) {
+                            setInfo(userInfo);
+                            if (token) {
+                                setIsLoggedIn(true);
+                            }
+                        } else {
+                            Toast.show({
+                                type: "error",
+                                text1: msg,
+                            });
+                        }
+                    });
                 }
+
                 //TODO: image preload
                 // await Font.loadAsync(Entypo.font);
                 // await new Promise.all([...imagePromises]);
@@ -66,31 +94,33 @@ export default function App() {
         return null;
     }
 
+    const getToken = () => {
+        return AsyncStorage.getItem("token");
+    };
+
     return (
         <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
             <IsLoggedInProvider>
                 <UserProvider>
                     <ThemeProvider theme={theme}>
-                        <RecoilRoot>
-                            <NavigationContainer>
-                                <IsLoggedInConsumer>
-                                    {({ isLoggedIn }) =>
-                                        isLoggedIn ? (
-                                            <MainNavigator />
-                                        ) : (
-                                            <SignUpProvider>
-                                                <IntroNavigator />
-                                            </SignUpProvider>
-                                        )
-                                    }
-                                </IsLoggedInConsumer>
-                            </NavigationContainer>
-                            <Toast
-                                position="bottom"
-                                bottomOffset="90"
-                                config={toastConfig}
-                            />
-                        </RecoilRoot>
+                        <NavigationContainer>
+                            <IsLoggedInConsumer>
+                                {({ isLoggedIn }) =>
+                                    isLoggedIn ? ( //TODO로그인 이슈
+                                        <MainNavigator />
+                                    ) : (
+                                        <SignUpProvider>
+                                            <IntroNavigator />
+                                        </SignUpProvider>
+                                    )
+                                }
+                            </IsLoggedInConsumer>
+                        </NavigationContainer>
+                        <Toast
+                            position="bottom"
+                            bottomOffset="90"
+                            config={toastConfig}
+                        />
                     </ThemeProvider>
                 </UserProvider>
             </IsLoggedInProvider>

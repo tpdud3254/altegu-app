@@ -6,6 +6,7 @@ import DefaultLayout from "../component/presenter/layout/DefaultLayout";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import IsLoggedInContext from "../Context/IsLoggedInContext";
 import UserContext from "../Context/UserContext";
+import { setLogout } from "../utils";
 
 function Home() {
     const { setIsLoggedIn } = useContext(IsLoggedInContext);
@@ -19,6 +20,7 @@ function Home() {
                 title="로그아웃"
                 onPress={async () => {
                     await AsyncStorage.removeItem("token");
+                    await AsyncStorage.removeItem("userId");
                     setIsLoggedIn(false);
                 }}
             ></Button>

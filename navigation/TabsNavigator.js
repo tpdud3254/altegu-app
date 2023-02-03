@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { Image, Text, View } from "react-native";
 import TabIcon from "../component/presenter/icon/TabIcons";
+import SearchAddress from "../screens/SearchAddress";
 import Home from "../screens/Home";
 import RegistWork from "../screens/RegistWork/RegistWork";
 import SelectWorkTheme from "../screens/RegistWork/SelectWorkTheme";
@@ -65,6 +66,13 @@ export default function TabsNavigator() {
                             options={{
                                 headerBackTitleVisible: false,
                                 title: "작업 등록",
+                            }}
+                        />
+                        <Stack.Screen
+                            name="SearchAddress"
+                            component={SearchAddress}
+                            options={{
+                                headerShown: false,
                             }}
                         />
                     </Stack.Navigator>

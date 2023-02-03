@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import PropTypes from "prop-types";
 import { Text, View } from "react-native";
 import DefaultLayout from "../../component/presenter/layout/DefaultLayout";
-import { theme } from "../../styles";
+import { fonts, theme } from "../../styles";
 import HorizontalDivider from "../../component/presenter/divider/HorizontalDivider";
 
 const Container = styled.View`
@@ -18,23 +18,26 @@ const Row = styled.View`
     flex-direction: row;
     justify-content: center;
 `;
+
 const Button = styled.TouchableOpacity`
     align-items: center;
     background-color: ${(props) => props.color};
     padding: 15px 25px;
-    border-radius: 20px;
+    border-radius: 10px;
     margin: 5px 5px;
 `;
+
 const MainText = styled.Text`
     color: white;
     font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 5px;
+    font-family: ${fonts.subTitle};
 `;
+
 const SubText = styled.Text`
     color: white;
     font-size: 20px;
-    font-weight: 500;
+    font-family: ${fonts.content};
+    margin: -10px 0px -15px 0px;
 `;
 
 function SelectWorkTheme({ navigation }) {
@@ -80,7 +83,7 @@ function SelectWorkTheme({ navigation }) {
                 <Warrper>
                     <Row>
                         <Button
-                            color={theme.sub.green}
+                            color={theme.sub.green + "ee"}
                             onPress={() => {
                                 selectTheme("sky", "row");
                             }}
@@ -90,7 +93,7 @@ function SelectWorkTheme({ navigation }) {
                         </Button>
 
                         <Button
-                            color={theme.sub.green}
+                            color={theme.sub.green + "ee"}
                             onPress={() => {
                                 selectTheme("sky", "middle");
                             }}
@@ -101,7 +104,7 @@ function SelectWorkTheme({ navigation }) {
                     </Row>
                     <Row>
                         <Button
-                            color={theme.sub.green}
+                            color={theme.sub.green + "ee"}
                             onPress={() => {
                                 selectTheme("sky", "high");
                             }}

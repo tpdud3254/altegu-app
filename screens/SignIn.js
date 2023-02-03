@@ -73,6 +73,7 @@ function SignIn() {
             if (result) {
                 setInfo(user);
                 await AsyncStorage.setItem("token", token);
+                await AsyncStorage.setItem("userId", user.id + "");
                 setIsLoggedIn(true);
             } else {
                 Toast.show({
